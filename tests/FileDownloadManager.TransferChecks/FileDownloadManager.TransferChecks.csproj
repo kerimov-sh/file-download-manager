@@ -8,8 +8,8 @@
 
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
-    <ProjectReference Include="../../src/FileDownloadManager.Infrastructure/FileDownloadManager.Infrastructure.csproj" />
-    <ProjectReference Include="../../src/FileDownloadManager.Application/FileDownloadManager.Application.csproj" />
-    <ProjectReference Include="../../src/FileDownloadManager.Domain/FileDownloadManager.Domain.csproj" />
+    <ProjectReference Include="../../src/FileDownloadManager.Engine/FileDownloadManager.Engine.csproj" />
+    <ProjectReference Include="../../src/FileDownloadManager.DownloadContracts/FileDownloadManager.DownloadContracts.csproj" />
+    <ProjectReference Include="../../src/FileDownloadManager.TransferModel/FileDownloadManager.TransferModel.csproj" />
   </ItemGroup>
 </Project>

@@ -1,8 +1,8 @@
 <Solution>
   <Folder Name="/src/">
-    <Project Path="src/FileDownloadManager.Application/FileDownloadManager.Application.csproj" />
-    <Project Path="src/FileDownloadManager.Domain/FileDownloadManager.Domain.csproj" />
-    <Project Path="src/FileDownloadManager.Infrastructure/FileDownloadManager.Infrastructure.csproj" />
+    <Project Path="src/FileDownloadManager.DownloadContracts/FileDownloadManager.DownloadContracts.csproj" />
+    <Project Path="src/FileDownloadManager.TransferModel/FileDownloadManager.TransferModel.csproj" />
+    <Project Path="src/FileDownloadManager.Engine/FileDownloadManager.Engine.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/FileDownloadManager.TransferChecks/FileDownloadManager.TransferChecks.csproj" />

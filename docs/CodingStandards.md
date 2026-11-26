@@ -10,10 +10,12 @@ Use .NET and Microsoft packages for application code. Avalonia and its required 
 
 | Layer | Owns | May reference |
 |---|---|---|
-| Domain | Download states, range and queue invariants, completion rules | .NET base types |
-| Application | Use cases, scheduling decisions, coordination, contracts for external operations | Domain |
-| Infrastructure | Network requests, partial files, checkpoints, settings storage, platform adapters | Application and Domain |
-| Desktop | Avalonia views, presentation state, localization, desktop lifetime | Application and Domain. The startup code wires in Infrastructure. |
+| TransferModel | Download requests, states, and rules for ranges and completion | .NET base types |
+| DownloadContracts | Operations that callers can request from the engine | TransferModel |
+| Engine | Transfer execution, protocol handling, scheduling, partial files, and checkpoints | DownloadContracts and TransferModel |
+| UI (planned) | Avalonia windows, localization, and desktop lifetime | Uses DownloadContracts and TransferModel. Startup wires in Engine. |
+
+Name each library for its role in the download manager. Keep its folder, project filename, and root namespace aligned.
 
 Host the engine and scheduler in the desktop process. Browser and command-line entry points should submit operations to the running application through a local boundary, with a single owner of queue and file state.
 
@@ -26,6 +28,10 @@ Apply SOLID to concrete responsibilities. For example, changing a toolbar label 
 - Give asynchronous methods the `Async` suffix when the framework contract permits it.
 - Choose names that identify units and scope, such as `MaximumParallelSegmentsPerFile`. Use `TimeSpan` for durations and a sufficiently wide integer type for byte positions.
 
+## Comments
+
+- For complex logic, comment on the reason for the implementation choice, the invariant it preserves, or the failure it prevents. Place the comment beside the relevant code and update it when the reasoning changes. Omit comments that merely narrate an assignment, condition, or method call.
+
 ## Values and resources
 
 - Use framework enums and typed APIs for protocol values. Give meaningful fixed literals named constants near the component that owns them. Put configurable limits and defaults in named, validated settings.
@@ -35,7 +41,7 @@ Apply SOLID to concrete responsibilities. For example, changing a toolbar label 
 
 ## Cooperative cancellation
 
-- Give each cancellable operation a final parameter named `CancellationToken cancellationToken`. Require it on internal APIs so callers must supply the token. Forward it through application and infrastructure calls, including HTTP requests, stream reads and writes, retry delays, and scheduler waits.
+- Give each cancellable operation a final parameter named `CancellationToken cancellationToken`. Require it on internal APIs so callers must supply the token. Forward it through the download contracts and engine, including HTTP requests, stream reads and writes, retry delays, and scheduler waits.
 - The desktop host owns the application lifetime token. Each running transfer owns a `CancellationTokenSource` linked to that lifetime and passes its token to every segment. Check `ThrowIfCancellationRequested()` in long-running loops that have no cancellable await. Await the segment tasks before disposing their source or closing shared files.
 - Record the reason for stopping at the application boundary. Pause preserves resumable data, a user cancellation ends the job, and Exit checkpoints eligible jobs for recovery. Treat an `OperationCanceledException` caused by the requested token as an expected stop and skip retries. Handle network timeouts separately.
 - Finish any required checkpoint using a separate, bounded cleanup token so an already-cancelled transfer token cannot interrupt the save. A checkpoint must describe only durable bytes.

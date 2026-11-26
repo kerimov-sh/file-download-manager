@@ -1,8 +1,8 @@
 using System.Net;
-using FileDownloadManager.Application;
-using FileDownloadManager.Domain;
+using FileDownloadManager.DownloadContracts;
+using FileDownloadManager.TransferModel;
 
-namespace FileDownloadManager.Infrastructure;
+namespace FileDownloadManager.Engine;
 
 public sealed class HttpFileDownloader(HttpClient httpClient) : IFileDownloader
 {
@@ -21,6 +21,7 @@ public sealed class HttpFileDownloader(HttpClient httpClient) : IFileDownloader
             throw new InvalidDataException();
         }
 
+        // Staging beside the destination keeps the final rename on the same filesystem.
         var directory = Path.GetDirectoryName(request.DestinationPath)!;
         var partialPath = Path.Combine(directory, Path.GetRandomFileName() + PartialFileExtension);
         var options = new FileStreamOptions

@@ -1,4 +1,4 @@
-namespace FileDownloadManager.Domain;
+namespace FileDownloadManager.TransferModel;
 
 public sealed class DownloadRequest
 {

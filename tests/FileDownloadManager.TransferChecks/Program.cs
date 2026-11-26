@@ -1,7 +1,7 @@
 using System.Net;
-using FileDownloadManager.Application;
-using FileDownloadManager.Domain;
-using FileDownloadManager.Infrastructure;
+using FileDownloadManager.DownloadContracts;
+using FileDownloadManager.TransferModel;
+using FileDownloadManager.Engine;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;

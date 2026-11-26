@@ -7,7 +7,7 @@ The goal is functional parity with Internet Download Manager on Windows and Linu
 | Topic | Decision |
 |---|---|
 | Runtime and UI | .NET 10 LTS, shared Avalonia desktop UI. Plain JavaScript is approved for browser extensions. |
-| Architecture | Domain, Application, Infrastructure, and Desktop layers. Add CommandLine and BrowserHost projects when their milestones need them. Use the solution prefix for every project. |
+| Architecture | TransferModel, DownloadContracts, Engine, and the planned Avalonia UI. Add CommandLine and BrowserHost projects when their milestones need them. Use the solution prefix for every project. |
 | Application lifetime | Closing the main window leaves the program running. Reopening reconnects to the current transfers. Explicit Exit saves progress and ends transfers and scheduling. User launch starts the program. |
 | Languages | English first and as fallback. Keep translations, themes, icons, and images separate. |
 | Linux validation | Ubuntu LTS is a proposed first test distribution. Record the release, display session, and desktop environment for each desktop integration test. |
@@ -15,7 +15,7 @@ The goal is functional parity with Internet Download Manager on Windows and Linu
 
 ## Milestones and acceptance checks
 
-The first review increment adds the Domain, Application, and Infrastructure projects to the [solution](../FileDownloadManager.slnx). The `IFileDownloader.DownloadAsync` entry point accepts an HTTP(S) source, a destination in an existing directory, and a cancellation token. The single-stream implementation publishes completed files without overwriting an existing destination.
+The first review increment adds the TransferModel, DownloadContracts, and Engine projects to the [solution](../FileDownloadManager.slnx). The `IFileDownloader.DownloadAsync` entry point accepts an HTTP(S) source, a destination in an existing directory, and a cancellation token. The single-stream implementation publishes completed files without overwriting an existing destination.
 
 Run `dotnet build` from the repository root, then `dotnet run --no-build --project tests/FileDownloadManager.TransferChecks`. The Windows integration run exercised a local HTTP server, redirects, unknown response length, byte equality, destination collisions, missing resources, unsolicited partial responses, truncation, and cancellation. Linux execution and TLS-specific tests are pending. The desktop interface, progress reporting, pause/resume, retries, and recovery after process interruption remain later increments.
 
@@ -30,7 +30,7 @@ Run `dotnet build` from the repository root, then `dotnet run --no-build --proje
 | 6. Browser capture | Chromium-family and Firefox extensions, native messaging, link context menus, selected/all links, takeover and override keys, file and site exclusions, authenticated handoff. Investigate advanced capture from other applications per OS. | Verify each supported browser on both operating systems, including logged-in downloads, exclusions, and cancellation without duplicate transfers. |
 | 7. Media | In-player panel, format and quality selection, direct media, supported segmented streams, audio/video assembly, subtitles, and expiring addresses. Document format and site coverage. | Use controlled media fixtures to verify duration, selected quality, audio synchronization, and subtitles in the completed file. |
 | 8. Website Grabber | Saved projects and templates, crawl scope, traversal and download filters, discovery preview, selective transfer, offline link rewriting, scheduled refresh. | Mirror a fixture site with relative links and cycles. Browse offline and refresh a changed asset without fetching excluded paths. |
-| 9. Network and OS parity | FTP, legacy MMS, system/manual proxy settings and proxy auto-configuration, site and proxy authentication, external scanner hooks, open/run actions, network disconnect and shutdown where supported. | Record protocol, authentication method, and OS results individually. Verify enabled completion actions after natural completion and after manual stop. |
+| 9. Network and OS parity | FTP, SFTP over SSH, legacy MMS, system/manual proxy settings and proxy auto-configuration, site and proxy authentication, external scanner hooks, open/run actions, network disconnect and shutdown where supported. | Verify SFTP against a controlled SSH server, including host-key verification, authentication, cancellation, and byte equality. Record results per protocol and OS. Verify completion actions after natural completion and manual stop. |
 | 10. UI parity and distribution | Customizable columns and toolbars, skins, themes, notifications, tray integration, language selection, installation, updater, and product decisions on trial and registration. | Verify packaging and upgrades on Windows and the chosen Linux distribution. Preserve partial files and queues across upgrade. Exercise localization fallback and each supported desktop workflow. |
 
 ## Cancellation acceptance checks

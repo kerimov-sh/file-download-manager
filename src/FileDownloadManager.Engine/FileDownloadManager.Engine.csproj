@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../FileDownloadManager.Domain/FileDownloadManager.Domain.csproj" />
+    <ProjectReference Include="../FileDownloadManager.DownloadContracts/FileDownloadManager.DownloadContracts.csproj" />
+    <ProjectReference Include="../FileDownloadManager.TransferModel/FileDownloadManager.TransferModel.csproj" />
   </ItemGroup>
 </Project>
