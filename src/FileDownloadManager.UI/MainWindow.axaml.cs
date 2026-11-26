@@ -11,6 +11,7 @@ namespace FileDownloadManager.UI;
 
 public sealed partial class MainWindow : Window
 {
+    private const string EmptyGridClass = "emptyGrid";
     public required IFileDownloader Downloader { private get; init; }
     private readonly CancellationTokenSource _lifetime = new();
     private readonly List<DownloadRow> _library = [];
@@ -130,6 +131,7 @@ public sealed partial class MainWindow : Window
             : sorted.GroupBy(row => GroupKey(row, grouping)).SelectMany(group =>
                 group.Select(ToGridItem).Prepend(new DownloadGridItem(group.Key))).ToList();
         Rows.ItemsSource = items;
+        Rows.Classes.Set(EmptyGridClass, items.Count == 0);
         Rows.SelectedItem = select is null ? null : items.FirstOrDefault(item => item.Download?.Id == select.Id);
         Count.Text = string.Format(CultureInfo.CurrentCulture, Strings.LibraryCount, visible.Count);
         UpdateActions();

@@ -1,7 +1,7 @@
 <Window xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:ui="using:FileDownloadManager.UI" xmlns:loc="using:FileDownloadManager.UI.Resources.Localization"
         FontSize="12" x:Class="FileDownloadManager.UI.MainWindow" Title="{x:Static loc:Strings.Title}"
-        Width="960" Height="620" MinWidth="710" MinHeight="500" WindowStartupLocation="CenterScreen">
+        Width="1024" Height="620" MinWidth="710" MinHeight="500" WindowStartupLocation="CenterScreen">
   <Grid RowDefinitions="Auto,Auto,*,Auto">
     <Menu>
       <MenuItem Header="{x:Static loc:Strings.Tasks}">
@@ -21,50 +21,61 @@
       </MenuItem>
     </Menu>
     <Border Grid.Row="1" Classes="toolbar">
-      <StackPanel Orientation="Horizontal" Spacing="2">
-        <Button Classes="tool" x:Name="AddLinkButton" Click="AddClicked" AutomationProperties.Name="{x:Static loc:Strings.AddUrl}">
-          <StackPanel Spacing="4">
-            <PathIcon Width="28" Height="28" Foreground="{DynamicResource ToolbarAddBrush}" Data="{DynamicResource IconAddLink}" />
-            <TextBlock HorizontalAlignment="Center" Text="{x:Static loc:Strings.AddUrl}" />
-          </StackPanel>
-        </Button>
-        <Button Classes="tool" x:Name="RetryButton" Click="RetryClicked" AutomationProperties.Name="{x:Static loc:Strings.Retry}" IsEnabled="False">
-          <StackPanel Spacing="4">
-            <PathIcon Width="28" Height="28" Foreground="{DynamicResource ToolbarRetryBrush}" Data="{DynamicResource IconActive}" />
-            <TextBlock HorizontalAlignment="Center" Text="{x:Static loc:Strings.Retry}" />
-          </StackPanel>
-        </Button>
-        <Button Classes="tool" x:Name="StopButton" Click="CancelClicked" AutomationProperties.Name="{x:Static loc:Strings.StopTransfer}" IsEnabled="False">
-          <StackPanel Spacing="4">
-            <PathIcon Width="28" Height="28" Foreground="{DynamicResource ToolbarStopBrush}" Data="{DynamicResource IconStop}" />
-            <TextBlock HorizontalAlignment="Center" Text="{x:Static loc:Strings.StopTransfer}" />
-          </StackPanel>
-        </Button>
-        <Button Classes="tool" x:Name="StopAllButton" Click="CancelClicked" AutomationProperties.Name="{x:Static loc:Strings.StopAll}" IsEnabled="False">
-          <StackPanel Spacing="4">
-            <PathIcon Width="28" Height="28" Foreground="{DynamicResource ToolbarStopAllBrush}" Data="{DynamicResource IconIncomplete}" />
-            <TextBlock HorizontalAlignment="Center" Text="{x:Static loc:Strings.StopAll}" />
-          </StackPanel>
-        </Button>
-        <Button Classes="tool" x:Name="RemoveButton" Click="RemoveClicked" AutomationProperties.Name="{x:Static loc:Strings.RemoveEntry}" IsEnabled="False">
-          <StackPanel Spacing="4">
-            <PathIcon Width="28" Height="28" Foreground="{DynamicResource ToolbarRemoveBrush}" Data="{DynamicResource IconRemove}" />
-            <TextBlock HorizontalAlignment="Center" Text="{x:Static loc:Strings.RemoveEntry}" />
-          </StackPanel>
-        </Button>
-        <Button Classes="tool" x:Name="ClearButton" Click="ClearFinishedClicked" AutomationProperties.Name="{x:Static loc:Strings.ClearFinished}" IsEnabled="False">
-          <StackPanel Spacing="4">
-            <PathIcon Width="28" Height="28" Foreground="{DynamicResource ToolbarClearBrush}" Data="{DynamicResource IconFinished}" />
-            <TextBlock HorizontalAlignment="Center" Text="{x:Static loc:Strings.ClearFinished}" />
-          </StackPanel>
-        </Button>
-        <Button Classes="tool" x:Name="OptionsButton" Click="OptionsClicked" AutomationProperties.Name="{x:Static loc:Strings.Options}">
-          <StackPanel Spacing="4">
-            <PathIcon Width="28" Height="28" Foreground="{DynamicResource ToolbarOptionsBrush}" Data="{DynamicResource IconSettings}" />
-            <TextBlock HorizontalAlignment="Center" Text="{x:Static loc:Strings.Options}" />
-          </StackPanel>
-        </Button>
-      </StackPanel>
+      <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+        <StackPanel Orientation="Horizontal" Spacing="2">
+          <Button Classes="tool" x:Name="AddLinkButton" Click="AddClicked" AutomationProperties.Name="{x:Static loc:Strings.AddUrl}">
+            <StackPanel Spacing="4">
+              <PathIcon Width="28" Height="28" Foreground="{DynamicResource ToolbarAddBrush}" Data="{DynamicResource IconAddLink}" />
+              <TextBlock HorizontalAlignment="Center" Text="{x:Static loc:Strings.AddUrl}" />
+            </StackPanel>
+          </Button>
+          <Button Classes="tool" x:Name="RetryButton" Click="RetryClicked" AutomationProperties.Name="{x:Static loc:Strings.Retry}" IsEnabled="False">
+            <StackPanel Spacing="4">
+              <PathIcon Width="28" Height="28" Foreground="{DynamicResource ToolbarRetryBrush}" Data="{DynamicResource IconActive}" />
+              <TextBlock HorizontalAlignment="Center" Text="{x:Static loc:Strings.Retry}" />
+            </StackPanel>
+          </Button>
+          <Button Classes="tool" x:Name="StopButton" Click="CancelClicked" AutomationProperties.Name="{x:Static loc:Strings.StopTransfer}" IsEnabled="False">
+            <StackPanel Spacing="4">
+              <PathIcon Width="28" Height="28" Foreground="{DynamicResource ToolbarStopBrush}" Data="{DynamicResource IconStop}" />
+              <TextBlock HorizontalAlignment="Center" Text="{x:Static loc:Strings.StopTransfer}" />
+            </StackPanel>
+          </Button>
+          <Button Classes="tool" x:Name="StopAllButton" Click="CancelClicked" AutomationProperties.Name="{x:Static loc:Strings.StopAll}" IsEnabled="False">
+            <StackPanel Spacing="4">
+              <PathIcon Width="28" Height="28" Foreground="{DynamicResource ToolbarStopAllBrush}" Data="{DynamicResource IconIncomplete}" />
+              <TextBlock HorizontalAlignment="Center" Text="{x:Static loc:Strings.StopAll}" />
+            </StackPanel>
+          </Button>
+          <Button Classes="tool" x:Name="RemoveButton" Click="RemoveClicked" AutomationProperties.Name="{x:Static loc:Strings.RemoveEntry}" IsEnabled="False">
+            <StackPanel Spacing="4">
+              <PathIcon Width="28" Height="28" Foreground="{DynamicResource ToolbarRemoveBrush}" Data="{DynamicResource IconRemove}" />
+              <TextBlock HorizontalAlignment="Center" Text="{x:Static loc:Strings.RemoveEntry}" />
+            </StackPanel>
+          </Button>
+          <Button Classes="tool" x:Name="ClearButton" Click="ClearFinishedClicked" AutomationProperties.Name="{x:Static loc:Strings.ClearFinished}" IsEnabled="False">
+            <StackPanel Spacing="4">
+              <PathIcon Width="28" Height="28" Foreground="{DynamicResource ToolbarClearBrush}" Data="{DynamicResource IconFinished}" />
+              <TextBlock HorizontalAlignment="Center" Text="{x:Static loc:Strings.ClearFinished}" />
+            </StackPanel>
+          </Button>
+          <Button Classes="tool" x:Name="OptionsButton" Click="OptionsClicked" AutomationProperties.Name="{x:Static loc:Strings.Options}">
+            <StackPanel Spacing="4">
+              <PathIcon Width="28" Height="28" Foreground="{DynamicResource ToolbarOptionsBrush}" Data="{DynamicResource IconSettings}" />
+              <TextBlock HorizontalAlignment="Center" Text="{x:Static loc:Strings.Options}" />
+            </StackPanel>
+          </Button>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+          <TextBlock Text="{x:Static loc:Strings.GroupBy}" VerticalAlignment="Center" />
+          <ComboBox x:Name="Grouping" AutomationProperties.Name="{x:Static loc:Strings.GroupBy}" SelectionChanged="GroupingChanged">
+            <ComboBoxItem Content="{x:Static loc:Strings.NoGrouping}" Tag="{x:Static ui:DownloadGrouping.None}" />
+            <ComboBoxItem Content="{x:Static loc:Strings.FileType}" Tag="{x:Static ui:DownloadGrouping.FileType}" />
+            <ComboBoxItem Content="{x:Static loc:Strings.TransferStatus}" Tag="{x:Static ui:DownloadGrouping.Status}" />
+            <ComboBoxItem Content="{x:Static loc:Strings.AddedDate}" Tag="{x:Static ui:DownloadGrouping.AddedDate}" />
+          </ComboBox>
+        </StackPanel>
+      </Grid>
     </Border>
     <Grid Grid.Row="2" ColumnDefinitions="168,*">
       <Border Classes="sidebar">
@@ -90,123 +101,115 @@
           </TreeView>
         </DockPanel>
       </Border>
-      <Grid Grid.Column="1" RowDefinitions="Auto,*">
-        <Border Classes="groupBar">
-          <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
-            <TextBlock Text="{x:Static loc:Strings.GroupBy}" VerticalAlignment="Center" />
-            <ComboBox x:Name="Grouping" AutomationProperties.Name="{x:Static loc:Strings.GroupBy}" SelectionChanged="GroupingChanged">
-              <ComboBoxItem Content="{x:Static loc:Strings.NoGrouping}" Tag="{x:Static ui:DownloadGrouping.None}" />
-              <ComboBoxItem Content="{x:Static loc:Strings.FileType}" Tag="{x:Static ui:DownloadGrouping.FileType}" />
-              <ComboBoxItem Content="{x:Static loc:Strings.TransferStatus}" Tag="{x:Static ui:DownloadGrouping.Status}" />
-              <ComboBoxItem Content="{x:Static loc:Strings.AddedDate}" Tag="{x:Static ui:DownloadGrouping.AddedDate}" />
-            </ComboBox>
-          </StackPanel>
-        </Border>
-        <TableView Grid.Row="1" x:Name="Rows" Background="Transparent" CanUserResizeColumns="True"
+      <TableView Grid.Column="1" x:Name="Rows" Classes="downloadGrid" CanUserResizeColumns="True"
                    SelectionChanged="RowChanged" ScrollViewer.HorizontalScrollBarVisibility="Auto">
-          <TableView.Columns>
-            <TableViewColumn Width="2*">
-              <TableViewColumn.Header>
-                <Button Classes="columnSort" Content="{x:Static loc:Strings.FileName}" Tag="{x:Static ui:DownloadColumn.FileName}" Click="SortClicked" />
-              </TableViewColumn.Header>
-              <TableViewColumn.CellTemplate>
-                <DataTemplate x:DataType="ui:DownloadGridItem">
-                  <StackPanel Orientation="Horizontal" Spacing="4">
-                    <PathIcon Width="12" Height="12" Data="{DynamicResource IconFile}" IsVisible="{Binding !IsGroup}" />
-                    <TextBlock Text="{Binding Title}" TextTrimming="CharacterEllipsis" Classes.groupTitle="{Binding IsGroup}" />
-                  </StackPanel>
-                </DataTemplate>
-              </TableViewColumn.CellTemplate>
-            </TableViewColumn>
-            <TableViewColumn Width="64">
-              <TableViewColumn.Header>
-                <Button Classes="columnSort" Content="{x:Static loc:Strings.FileType}" Tag="{x:Static ui:DownloadColumn.FileType}" Click="SortClicked" />
-              </TableViewColumn.Header>
-              <TableViewColumn.CellTemplate>
-                <DataTemplate x:DataType="ui:DownloadGridItem">
-                  <TextBlock Text="{Binding Download.FileType}" TextTrimming="CharacterEllipsis" />
-                </DataTemplate>
-              </TableViewColumn.CellTemplate>
-            </TableViewColumn>
-            <TableViewColumn Width="73">
-              <TableViewColumn.Header>
-                <Button Classes="columnSort" Content="{x:Static loc:Strings.FileSize}" Tag="{x:Static ui:DownloadColumn.Size}" Click="SortClicked" />
-              </TableViewColumn.Header>
-              <TableViewColumn.CellTemplate>
-                <DataTemplate x:DataType="ui:DownloadGridItem">
-                  <Panel IsVisible="{Binding !IsGroup}">
-                    <TextBlock Text="{Binding Download.Size}" IsVisible="{Binding !Download.Metrics}" />
-                    <TextBlock Text="{Binding Download.Metrics.Size}" IsVisible="{Binding !!Download.Metrics}" />
-                  </Panel>
-                </DataTemplate>
-              </TableViewColumn.CellTemplate>
-            </TableViewColumn>
-            <TableViewColumn Width="90">
-              <TableViewColumn.Header>
-                <Button Classes="columnSort" Content="{x:Static loc:Strings.TransferStatus}" Tag="{x:Static ui:DownloadColumn.Status}" Click="SortClicked" />
-              </TableViewColumn.Header>
-              <TableViewColumn.CellTemplate>
-                <DataTemplate x:DataType="ui:DownloadGridItem">
-                  <Panel IsVisible="{Binding !IsGroup}">
-                    <TextBlock Text="{Binding Download.Status}" IsVisible="{Binding !Download.Metrics}" />
-                    <TextBlock Text="{Binding Download.Metrics.Status}" IsVisible="{Binding !!Download.Metrics}" />
-                  </Panel>
-                </DataTemplate>
-              </TableViewColumn.CellTemplate>
-            </TableViewColumn>
-            <TableViewColumn Width="72">
-              <TableViewColumn.Header>
-                <Button Classes="columnSort" Content="{x:Static loc:Strings.TimeLeft}" Tag="{x:Static ui:DownloadColumn.TimeLeft}" Click="SortClicked" />
-              </TableViewColumn.Header>
-              <TableViewColumn.CellTemplate>
-                <DataTemplate x:DataType="ui:DownloadGridItem">
-                  <TextBlock Text="{Binding Download.Metrics.TimeLeft}" TextTrimming="CharacterEllipsis" />
-                </DataTemplate>
-              </TableViewColumn.CellTemplate>
-            </TableViewColumn>
-            <TableViewColumn Width="85">
-              <TableViewColumn.Header>
-                <Button Classes="columnSort" Content="{x:Static loc:Strings.Rate}" Tag="{x:Static ui:DownloadColumn.Rate}" Click="SortClicked" />
-              </TableViewColumn.Header>
-              <TableViewColumn.CellTemplate>
-                <DataTemplate x:DataType="ui:DownloadGridItem">
-                  <TextBlock Text="{Binding Download.Metrics.Rate}" TextTrimming="CharacterEllipsis" />
-                </DataTemplate>
-              </TableViewColumn.CellTemplate>
-            </TableViewColumn>
-            <TableViewColumn Width="122">
-              <TableViewColumn.Header>
-                <Button Classes="columnSort" Content="{x:Static loc:Strings.AddedDate}" Tag="{x:Static ui:DownloadColumn.AddedDate}" Click="SortClicked" />
-              </TableViewColumn.Header>
-              <TableViewColumn.CellTemplate>
-                <DataTemplate x:DataType="ui:DownloadGridItem">
-                  <TextBlock Text="{Binding Download.AddedDate, StringFormat='{}{0:g}'}" TextTrimming="CharacterEllipsis" />
-                </DataTemplate>
-              </TableViewColumn.CellTemplate>
-            </TableViewColumn>
-            <TableViewColumn Width="122">
-              <TableViewColumn.Header>
-                <Button Classes="columnSort" Content="{x:Static loc:Strings.LastTry}" Tag="{x:Static ui:DownloadColumn.LastTry}" Click="SortClicked" />
-              </TableViewColumn.Header>
-              <TableViewColumn.CellTemplate>
-                <DataTemplate x:DataType="ui:DownloadGridItem">
-                  <TextBlock Text="{Binding Download.LastTry, StringFormat='{}{0:g}'}" TextTrimming="CharacterEllipsis" />
-                </DataTemplate>
-              </TableViewColumn.CellTemplate>
-            </TableViewColumn>
-            <TableViewColumn Width="1.2*">
-              <TableViewColumn.Header>
-                <Button Classes="columnSort" Content="{x:Static loc:Strings.Description}" Tag="{x:Static ui:DownloadColumn.Description}" Click="SortClicked" />
-              </TableViewColumn.Header>
-              <TableViewColumn.CellTemplate>
-                <DataTemplate x:DataType="ui:DownloadGridItem">
-                  <TextBlock Text="{Binding Download.Description}" TextTrimming="CharacterEllipsis" />
-                </DataTemplate>
-              </TableViewColumn.CellTemplate>
-            </TableViewColumn>
-          </TableView.Columns>
-        </TableView>
-      </Grid>
+        <TableView.Resources>
+          <Thickness x:Key="TableViewRowPadding">0</Thickness>
+          <SolidColorBrush x:Key="SystemControlBackgroundChromeMediumBrush" Color="#2D333F" />
+          <SolidColorBrush x:Key="TableViewColumnHeaderSeparatorBackground" Color="Transparent" />
+        </TableView.Resources>
+        <TableView.Columns>
+          <TableViewColumn Width="2*">
+            <TableViewColumn.Header>
+              <Button Classes="columnSort" Content="{x:Static loc:Strings.FileName}" Tag="{x:Static ui:DownloadColumn.FileName}" Click="SortClicked" />
+            </TableViewColumn.Header>
+            <TableViewColumn.CellTemplate>
+              <DataTemplate x:DataType="ui:DownloadGridItem">
+                <StackPanel Orientation="Horizontal" Spacing="4">
+                  <PathIcon Width="12" Height="12" Data="{DynamicResource IconFile}" IsVisible="{Binding !IsGroup}" />
+                  <TextBlock Text="{Binding Title}" TextTrimming="CharacterEllipsis" Classes.groupTitle="{Binding IsGroup}" />
+                </StackPanel>
+              </DataTemplate>
+            </TableViewColumn.CellTemplate>
+          </TableViewColumn>
+          <TableViewColumn Width="64">
+            <TableViewColumn.Header>
+              <Button Classes="columnSort" Content="{x:Static loc:Strings.FileType}" Tag="{x:Static ui:DownloadColumn.FileType}" Click="SortClicked" />
+            </TableViewColumn.Header>
+            <TableViewColumn.CellTemplate>
+              <DataTemplate x:DataType="ui:DownloadGridItem">
+                <TextBlock Text="{Binding Download.FileType}" TextTrimming="CharacterEllipsis" />
+              </DataTemplate>
+            </TableViewColumn.CellTemplate>
+          </TableViewColumn>
+          <TableViewColumn Width="73">
+            <TableViewColumn.Header>
+              <Button Classes="columnSort" Content="{x:Static loc:Strings.FileSize}" Tag="{x:Static ui:DownloadColumn.Size}" Click="SortClicked" />
+            </TableViewColumn.Header>
+            <TableViewColumn.CellTemplate>
+              <DataTemplate x:DataType="ui:DownloadGridItem">
+                <Panel IsVisible="{Binding !IsGroup}">
+                  <TextBlock Text="{Binding Download.Size}" IsVisible="{Binding !Download.Metrics}" />
+                  <TextBlock Text="{Binding Download.Metrics.Size}" IsVisible="{Binding !!Download.Metrics}" />
+                </Panel>
+              </DataTemplate>
+            </TableViewColumn.CellTemplate>
+          </TableViewColumn>
+          <TableViewColumn Width="90">
+            <TableViewColumn.Header>
+              <Button Classes="columnSort" Content="{x:Static loc:Strings.TransferStatus}" Tag="{x:Static ui:DownloadColumn.Status}" Click="SortClicked" />
+            </TableViewColumn.Header>
+            <TableViewColumn.CellTemplate>
+              <DataTemplate x:DataType="ui:DownloadGridItem">
+                <Panel IsVisible="{Binding !IsGroup}">
+                  <TextBlock Text="{Binding Download.Status}" IsVisible="{Binding !Download.Metrics}" />
+                  <TextBlock Text="{Binding Download.Metrics.Status}" IsVisible="{Binding !!Download.Metrics}" />
+                </Panel>
+              </DataTemplate>
+            </TableViewColumn.CellTemplate>
+          </TableViewColumn>
+          <TableViewColumn Width="72">
+            <TableViewColumn.Header>
+              <Button Classes="columnSort" Content="{x:Static loc:Strings.TimeLeft}" Tag="{x:Static ui:DownloadColumn.TimeLeft}" Click="SortClicked" />
+            </TableViewColumn.Header>
+            <TableViewColumn.CellTemplate>
+              <DataTemplate x:DataType="ui:DownloadGridItem">
+                <TextBlock Text="{Binding Download.Metrics.TimeLeft}" TextTrimming="CharacterEllipsis" />
+              </DataTemplate>
+            </TableViewColumn.CellTemplate>
+          </TableViewColumn>
+          <TableViewColumn Width="85">
+            <TableViewColumn.Header>
+              <Button Classes="columnSort" Content="{x:Static loc:Strings.Rate}" Tag="{x:Static ui:DownloadColumn.Rate}" Click="SortClicked" />
+            </TableViewColumn.Header>
+            <TableViewColumn.CellTemplate>
+              <DataTemplate x:DataType="ui:DownloadGridItem">
+                <TextBlock Text="{Binding Download.Metrics.Rate}" TextTrimming="CharacterEllipsis" />
+              </DataTemplate>
+            </TableViewColumn.CellTemplate>
+          </TableViewColumn>
+          <TableViewColumn Width="122">
+            <TableViewColumn.Header>
+              <Button Classes="columnSort" Content="{x:Static loc:Strings.AddedDate}" Tag="{x:Static ui:DownloadColumn.AddedDate}" Click="SortClicked" />
+            </TableViewColumn.Header>
+            <TableViewColumn.CellTemplate>
+              <DataTemplate x:DataType="ui:DownloadGridItem">
+                <TextBlock Text="{Binding Download.AddedDate, StringFormat='{}{0:g}'}" TextTrimming="CharacterEllipsis" />
+              </DataTemplate>
+            </TableViewColumn.CellTemplate>
+          </TableViewColumn>
+          <TableViewColumn Width="122">
+            <TableViewColumn.Header>
+              <Button Classes="columnSort" Content="{x:Static loc:Strings.LastTry}" Tag="{x:Static ui:DownloadColumn.LastTry}" Click="SortClicked" />
+            </TableViewColumn.Header>
+            <TableViewColumn.CellTemplate>
+              <DataTemplate x:DataType="ui:DownloadGridItem">
+                <TextBlock Text="{Binding Download.LastTry, StringFormat='{}{0:g}'}" TextTrimming="CharacterEllipsis" />
+              </DataTemplate>
+            </TableViewColumn.CellTemplate>
+          </TableViewColumn>
+          <TableViewColumn Width="1.2*">
+            <TableViewColumn.Header>
+              <Button Classes="columnSort" Content="{x:Static loc:Strings.Description}" Tag="{x:Static ui:DownloadColumn.Description}" Click="SortClicked" />
+            </TableViewColumn.Header>
+            <TableViewColumn.CellTemplate>
+              <DataTemplate x:DataType="ui:DownloadGridItem">
+                <TextBlock Text="{Binding Download.Description}" TextTrimming="CharacterEllipsis" />
+              </DataTemplate>
+            </TableViewColumn.CellTemplate>
+          </TableViewColumn>
+        </TableView.Columns>
+      </TableView>
     </Grid>
     <Border Grid.Row="3" Classes="footer">
       <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="12">

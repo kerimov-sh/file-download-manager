@@ -28,7 +28,7 @@
     <Setter Property="MinHeight" Value="38" />
     <Setter Property="CornerRadius" Value="6" />
   </Style>
-  <Style Selector="Border.toolbar, Border.groupBar">
+  <Style Selector="Border.toolbar">
     <Setter Property="BorderBrush" Value="{DynamicResource GridRule}" />
     <Setter Property="BorderThickness" Value="0,0,0,1" />
   </Style>
@@ -48,22 +48,43 @@
   <Style Selector="Border.toolbar, Border.sidebar, Border.footer">
     <Setter Property="Background" Value="{DynamicResource PanelSurface}" />
   </Style>
-  <Style Selector="Border.groupBar">
-    <Setter Property="Padding" Value="8,4" />
-    <Setter Property="Background" Value="{DynamicResource PanelSurface}" />
+  <Style Selector="TableView.downloadGrid">
+    <Setter Property="Background" Value="{DynamicResource WindowSurface}" />
+    <Setter Property="BorderThickness" Value="0" />
+  </Style>
+  <Style Selector="TableView.downloadGrid.emptyGrid">
+    <Setter Property="Background">
+      <DrawingBrush TileMode="Tile" DestinationRect="0,0,8,24" SourceRect="0,0,8,24" Stretch="Fill">
+        <DrawingBrush.Drawing>
+          <DrawingGroup>
+            <GeometryDrawing Geometry="M0,0 H8 V24 H0 Z" Brush="{DynamicResource WindowSurface}" />
+            <GeometryDrawing Geometry="M0,23 H8 V24 H0 Z" Brush="{DynamicResource GridRule}" />
+          </DrawingGroup>
+        </DrawingBrush.Drawing>
+      </DrawingBrush>
+    </Setter>
+  </Style>
+  <Style Selector="TableViewRow">
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="MinHeight" Value="24" />
+    <Setter Property="BorderThickness" Value="0,0,0,1" />
+    <Setter Property="BorderBrush" Value="{DynamicResource GridRule}" />
   </Style>
   <Style Selector="TableViewColumnHeader">
     <Setter Property="Background" Value="{DynamicResource HeaderSurface}" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="BorderThickness" Value="0,0,1,1" />
+    <Setter Property="BorderBrush" Value="{DynamicResource GridRule}" />
   </Style>
   <Style Selector="Button.columnSort">
     <Setter Property="Background" Value="Transparent" />
     <Setter Property="BorderThickness" Value="0" />
-    <Setter Property="Padding" Value="4,3" />
+    <Setter Property="Padding" Value="6,5" />
     <Setter Property="HorizontalAlignment" Value="Stretch" />
   </Style>
   <Style Selector="TableViewCell">
-    <Setter Property="Padding" Value="4,2" />
-    <Setter Property="BorderThickness" Value="0,0,1,1" />
+    <Setter Property="Padding" Value="6,3" />
+    <Setter Property="BorderThickness" Value="0,0,1,0" />
     <Setter Property="BorderBrush" Value="{DynamicResource GridRule}" />
   </Style>
   <Style Selector="TextBlock.groupTitle">

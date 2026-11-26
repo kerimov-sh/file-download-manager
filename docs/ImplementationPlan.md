@@ -33,6 +33,8 @@ The desktop defaults to a dark palette with subdued grid lines. Empty categories
 
 Drag column dividers to resize and click a header to sort. **File type** uses the filename extension. **Date added** records when the entry first entered the list, and retry updates **Last try** on the same entry. **Group by** groups the current category by file type, status, or date added. Windows desktop automation checked resizing, both sort directions, and file-type grouping.
 
+The download table uses one header strip, continuous cell dividers, and faint row guides for an empty list. **Group by** sits in the toolbar. Windows verification covered the empty and populated layouts, resizing, sorting, and grouping.
+
 | Step | Deliverable | Acceptance check |
 |---|---|---|
 | 0. Foundation | Confirm repository state, scaffold the solution and the first required projects, establish build and test entry points. | Build a clean checkout and verify project names and reference direction against the [coding standards](CodingStandards.md). |
