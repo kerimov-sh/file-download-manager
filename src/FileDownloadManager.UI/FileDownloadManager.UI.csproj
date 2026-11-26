@@ -8,6 +8,7 @@
     <AvaloniaVersion>12.2.0</AvaloniaVersion>
   </PropertyGroup>
   <ItemGroup>
+    <None Update="Resources/Icons/LICENSE-Bootstrap-Icons.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
     <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
     <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
     <ProjectReference Include="../FileDownloadManager.Engine/FileDownloadManager.Engine.csproj" />

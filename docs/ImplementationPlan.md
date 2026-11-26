@@ -19,7 +19,9 @@ The first review increment adds the TransferModel, DownloadContracts, and Engine
 
 Run `dotnet build` from the repository root, then `dotnet run --no-build --project tests/FileDownloadManager.TransferChecks`. The Windows integration run exercised a local HTTP server, redirects, unknown response length, byte equality, destination collisions, missing resources, unsolicited partial responses, truncation, and cancellation. Linux execution and TLS-specific tests are pending. Byte-level progress, pause/resume, retries, and recovery after process interruption remain later increments.
 
-Launch the English Avalonia form with `dotnet run --project src/FileDownloadManager.UI`. Enter an HTTP(S) URL and a full destination path or use Browse. The form supports one active transfer, an activity indicator, cancellation, and explicit Exit. Closing the window minimizes it to the taskbar. Windows desktop automation verified URL validation, starting a local download, its saved bytes, and Exit. Linux desktop testing, persistent download history, and scheduling are pending.
+Launch the Avalonia download library with `dotnet run --project src/FileDownloadManager.UI`. Choose **Add URL**, enter an HTTP(S) URL and destination, and start the transfer. The table shows filenames, completed file sizes, statuses, and source hosts for the current session. The sidebar filters all, downloading, finished, and unfinished entries. **Stop** cancels the selected active download. **Remove** clears a selected inactive entry and preserves its file. Closing the window minimizes it. **Tasks → Exit** ends the process.
+
+Windows desktop automation verified downloading, cancellation, category counts, completed size, removal, and saved bytes. The desktop currently supports one active transfer. Linux desktop testing, persistent history, and scheduling are pending. The toolbar and sidebar use [Bootstrap Icons v1.11.3](https://github.com/twbs/icons/tree/v1.11.3) with the [MIT license](../src/FileDownloadManager.UI/Resources/Icons/LICENSE-Bootstrap-Icons.txt) included in build and publish output.
 
 | Step | Deliverable | Acceptance check |
 |---|---|---|
