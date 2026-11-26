@@ -1,13 +1,16 @@
 using System.Globalization;
 using System.Net.Http;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Media;
+using Avalonia.Styling;
 using FileDownloadManager.DownloadContracts.Transfers;
 using FileDownloadManager.TransferModel.Transfers;
 using FileDownloadManager.UI.Appearance;
 using FileDownloadManager.UI.Downloads.Add;
 using FileDownloadManager.UI.Resources.Localization;
+using FileDownloadManager.UI.Settings;
 
 namespace FileDownloadManager.UI.Downloads.Library;
 
@@ -21,6 +24,9 @@ public sealed partial class MainWindow : Window
     private CancellationTokenSource? _transfer;
     private bool _exiting;
     private Window? _dialog;
+    private DesktopSettingsStore? _settings;
+    private DesktopPreferences? _preferences;
+    private DownloadCategory? _allDownloads;
     private DownloadColumn? _sortColumn;
     private Button? _sortHeader;
     private object? _sortHeaderLabel;
@@ -32,30 +38,37 @@ public sealed partial class MainWindow : Window
         InitializeComponent();
         if (OperatingSystem.IsWindows())
             FontFamily = new FontFamily("Segoe UI");
-        SystemIcons.IsEnabled = _systemIcons is not null;
-        SetIconTheme(_systemIcons);
-        Filters.ItemsSource = new[]
-        {
-            DownloadCategory.Group(Strings.AllDownloads, LibraryFilter.All),
-            DownloadCategory.Group(Strings.IncompleteTransfers, LibraryFilter.Incomplete),
-            DownloadCategory.Group(Strings.FinishedTransfers, LibraryFilter.Finished),
-            new DownloadCategory(Strings.ActiveTransfers, LibraryFilter.Active)
-        };
-        Filters.SelectedItem = Filters.Items[0];
         Grouping.SelectedIndex = 0;
         Closed += (_, _) => _lifetime.Dispose();
     }
 
-    private void SetIconTheme(FontFamily? family)
+    internal void ConfigureProperties(DesktopSettingsStore settings, DesktopPreferences preferences)
     {
-        WindowsIconTheme.Apply(Resources, family);
-        SystemIcons.IsChecked = family is not null;
-        BundledIcons.IsChecked = family is null;
+        _settings = settings;
+        ApplyProperties(preferences);
+        if (settings.LoadError is { } error)
+            Status.Text = string.Format(CultureInfo.CurrentCulture, Strings.SettingsLoadFailure, error);
     }
 
-    private void SystemIconsClicked(object? sender, RoutedEventArgs args) => SetIconTheme(_systemIcons);
+    private void ApplyProperties(DesktopPreferences preferences)
+    {
+        _preferences = preferences;
+        if (Application.Current is { } app)
+            app.RequestedThemeVariant = preferences.Theme switch
+            {
+                ThemePreference.Dark => ThemeVariant.Dark,
+                ThemePreference.Light => ThemeVariant.Light,
+                _ => ThemeVariant.Default
+            };
+        WindowsIconTheme.Apply(Resources, preferences.UseSystemIcons ? _systemIcons : null);
 
-    private void BundledIconsClicked(object? sender, RoutedEventArgs args) => SetIconTheme(null);
+        var categories = preferences.Categories.Select(category => DownloadCategory.FromDefinition(category)).ToArray();
+        _allDownloads = categories.FirstOrDefault(category => category.Filter == LibraryFilter.All &&
+            category.Extensions is not { Length: > 0 });
+        Filters.ItemsSource = categories;
+        Filters.SelectedItem = _allDownloads;
+        RefreshRows();
+    }
 
     internal void RestoreFromTray()
     {
@@ -199,14 +212,14 @@ public sealed partial class MainWindow : Window
 
     private async void OptionsClicked(object? sender, RoutedEventArgs args)
     {
-        if (_dialog is not null || _exiting)
+        if (_dialog is not null || _exiting || _settings is null || _preferences is null)
             return;
 
         var options = new OptionsWindow();
-        options.SetIconStyle(_systemIcons is not null, SystemIcons.IsChecked == true);
-        var useSystem = await ShowOwnedDialogAsync<bool?>(options);
-        if (useSystem is bool confirmed && !_exiting)
-            SetIconTheme(confirmed ? _systemIcons : null);
+        options.Edit(_settings, _preferences, _systemIcons is not null);
+        var preferences = await ShowOwnedDialogAsync<DesktopPreferences?>(options);
+        if (preferences is not null && !_exiting)
+            ApplyProperties(preferences);
     }
 
 
@@ -233,7 +246,7 @@ public sealed partial class MainWindow : Window
             _library.Insert(0, row);
         else
             _library[_library.IndexOf(previous)] = row;
-        Filters.SelectedItem = Filters.Items[0];
+        Filters.SelectedItem = _allDownloads;
         RefreshRows(row);
         SetDownloading(true);
         Status.Text = Strings.Downloading;

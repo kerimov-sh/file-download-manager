@@ -7,19 +7,27 @@ using Avalonia.Markup.Xaml;
 using FileDownloadManager.Engine.Http;
 using FileDownloadManager.UI.Downloads.Library;
 using FileDownloadManager.UI.Resources.Localization;
+using FileDownloadManager.UI.Settings;
 
 namespace FileDownloadManager.UI.Startup;
 
 public sealed partial class App : Application
 {
-    public override void Initialize() => AvaloniaXamlLoader.Load(this);
+    private readonly DesktopSettingsStore _settings = DesktopSettingsStore.ForCurrentUser();
+    private DesktopPreferences? _preferences;
+    public override void Initialize()
+    {
+        _preferences = _settings.Load();
+        AvaloniaXamlLoader.Load(this);
+    }
 
     public override void OnFrameworkInitializationCompleted()
     {
-        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop && _preferences is not null)
         {
             var client = new HttpClient();
             var window = new MainWindow { Downloader = new HttpFileDownloader(client) };
+            window.ConfigureProperties(_settings, _preferences);
             desktop.MainWindow = window;
             using var asset = AssetLoader.Open(new Uri("avares://FileDownloadManager.UI/Resources/Icons/DownloadManager.png"));
             window.Icon = new WindowIcon(asset);

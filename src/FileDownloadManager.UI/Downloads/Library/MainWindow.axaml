@@ -14,9 +14,6 @@
         <MenuItem x:Name="RemoveMenu" Header="{x:Static loc:Strings.RemoveEntry}" Click="RemoveClicked" IsEnabled="False" />
       </MenuItem>
       <MenuItem Header="{x:Static loc:Strings.View}">
-        <MenuItem x:Name="SystemIcons" Header="{x:Static loc:Strings.SystemIcons}" ToggleType="Radio" GroupName="IconStyle" Click="SystemIconsClicked" />
-        <MenuItem x:Name="BundledIcons" Header="{x:Static loc:Strings.BundledIcons}" ToggleType="Radio" GroupName="IconStyle" Click="BundledIconsClicked" />
-        <Separator />
         <MenuItem Header="{x:Static loc:Strings.Options}" Click="OptionsClicked" />
       </MenuItem>
     </Menu>
@@ -105,7 +102,6 @@
                    SelectionChanged="RowChanged" ScrollViewer.HorizontalScrollBarVisibility="Auto">
         <TableView.Resources>
           <Thickness x:Key="TableViewRowPadding">0</Thickness>
-          <SolidColorBrush x:Key="SystemControlBackgroundChromeMediumBrush" Color="#2D333F" />
           <SolidColorBrush x:Key="TableViewColumnHeaderSeparatorBackground" Color="Transparent" />
         </TableView.Resources>
         <TableView.Columns>

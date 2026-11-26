@@ -1,0 +1,34 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <ResourceDictionary.ThemeDictionaries>
+    <ResourceDictionary x:Key="Dark">
+      <SolidColorBrush x:Key="WindowSurface">#232730</SolidColorBrush>
+      <SolidColorBrush x:Key="PanelSurface">#272C36</SolidColorBrush>
+      <SolidColorBrush x:Key="HeaderSurface">#2D333F</SolidColorBrush>
+      <SolidColorBrush x:Key="GridRule">#343B47</SolidColorBrush>
+      <SolidColorBrush x:Key="ToolbarAddBrush">#80BDAC</SolidColorBrush>
+      <SolidColorBrush x:Key="ToolbarRetryBrush">#85B3DA</SolidColorBrush>
+      <SolidColorBrush x:Key="ToolbarStopBrush">#D39A8A</SolidColorBrush>
+      <SolidColorBrush x:Key="ToolbarStopAllBrush">#CDA384</SolidColorBrush>
+      <SolidColorBrush x:Key="ToolbarRemoveBrush">#C59BBE</SolidColorBrush>
+      <SolidColorBrush x:Key="ToolbarClearBrush">#BBA1CC</SolidColorBrush>
+      <SolidColorBrush x:Key="ToolbarOptionsBrush">#AAA9D9</SolidColorBrush>
+      <SolidColorBrush x:Key="CategoryIconBrush">#D0B679</SolidColorBrush>
+      <SolidColorBrush x:Key="SystemControlBackgroundChromeMediumBrush">#2D333F</SolidColorBrush>
+    </ResourceDictionary>
+    <ResourceDictionary x:Key="Light">
+      <SolidColorBrush x:Key="WindowSurface">#F7F8FB</SolidColorBrush>
+      <SolidColorBrush x:Key="PanelSurface">#EDF0F5</SolidColorBrush>
+      <SolidColorBrush x:Key="HeaderSurface">#E5EAF2</SolidColorBrush>
+      <SolidColorBrush x:Key="GridRule">#D2D9E4</SolidColorBrush>
+      <SolidColorBrush x:Key="ToolbarAddBrush">#276957</SolidColorBrush>
+      <SolidColorBrush x:Key="ToolbarRetryBrush">#295E91</SolidColorBrush>
+      <SolidColorBrush x:Key="ToolbarStopBrush">#964D3F</SolidColorBrush>
+      <SolidColorBrush x:Key="ToolbarStopAllBrush">#8E5832</SolidColorBrush>
+      <SolidColorBrush x:Key="ToolbarRemoveBrush">#7B4573</SolidColorBrush>
+      <SolidColorBrush x:Key="ToolbarClearBrush">#695083</SolidColorBrush>
+      <SolidColorBrush x:Key="ToolbarOptionsBrush">#524B8A</SolidColorBrush>
+      <SolidColorBrush x:Key="CategoryIconBrush">#8C671C</SolidColorBrush>
+      <SolidColorBrush x:Key="SystemControlBackgroundChromeMediumBrush">#E5EAF2</SolidColorBrush>
+    </ResourceDictionary>
+  </ResourceDictionary.ThemeDictionaries>
+</ResourceDictionary>

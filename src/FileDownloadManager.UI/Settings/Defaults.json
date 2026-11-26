@@ -1,0 +1,218 @@
+{
+  "language": "en",
+  "theme": "Dark",
+  "useSystemIcons": true,
+  "categories": [
+    {
+      "labelKey": "AllDownloads",
+      "filter": "All",
+      "children": [
+        {
+          "labelKey": "Compressed",
+          "icon": "IconFolderArchive",
+          "extensions": [
+            ".zip",
+            ".7z",
+            ".rar",
+            ".gz",
+            ".bz2",
+            ".tar",
+            ".xz"
+          ]
+        },
+        {
+          "labelKey": "Documents",
+          "icon": "IconFolderDocument",
+          "extensions": [
+            ".pdf",
+            ".txt",
+            ".doc",
+            ".docx",
+            ".xls",
+            ".xlsx",
+            ".ppt",
+            ".pptx",
+            ".odt"
+          ]
+        },
+        {
+          "labelKey": "Music",
+          "icon": "IconFolderMusic",
+          "extensions": [
+            ".mp3",
+            ".wav",
+            ".flac",
+            ".ogg",
+            ".m4a",
+            ".aac"
+          ]
+        },
+        {
+          "labelKey": "Programs",
+          "icon": "IconFolderProgram",
+          "extensions": [
+            ".exe",
+            ".msi",
+            ".deb",
+            ".rpm",
+            ".appimage",
+            ".apk"
+          ]
+        },
+        {
+          "labelKey": "Video",
+          "icon": "IconFolderVideo",
+          "extensions": [
+            ".mp4",
+            ".mkv",
+            ".webm",
+            ".mov",
+            ".avi"
+          ]
+        }
+      ]
+    },
+    {
+      "labelKey": "IncompleteTransfers",
+      "filter": "Incomplete",
+      "children": [
+        {
+          "labelKey": "Compressed",
+          "icon": "IconFolderArchive",
+          "extensions": [
+            ".zip",
+            ".7z",
+            ".rar",
+            ".gz",
+            ".bz2",
+            ".tar",
+            ".xz"
+          ]
+        },
+        {
+          "labelKey": "Documents",
+          "icon": "IconFolderDocument",
+          "extensions": [
+            ".pdf",
+            ".txt",
+            ".doc",
+            ".docx",
+            ".xls",
+            ".xlsx",
+            ".ppt",
+            ".pptx",
+            ".odt"
+          ]
+        },
+        {
+          "labelKey": "Music",
+          "icon": "IconFolderMusic",
+          "extensions": [
+            ".mp3",
+            ".wav",
+            ".flac",
+            ".ogg",
+            ".m4a",
+            ".aac"
+          ]
+        },
+        {
+          "labelKey": "Programs",
+          "icon": "IconFolderProgram",
+          "extensions": [
+            ".exe",
+            ".msi",
+            ".deb",
+            ".rpm",
+            ".appimage",
+            ".apk"
+          ]
+        },
+        {
+          "labelKey": "Video",
+          "icon": "IconFolderVideo",
+          "extensions": [
+            ".mp4",
+            ".mkv",
+            ".webm",
+            ".mov",
+            ".avi"
+          ]
+        }
+      ]
+    },
+    {
+      "labelKey": "FinishedTransfers",
+      "filter": "Finished",
+      "children": [
+        {
+          "labelKey": "Compressed",
+          "icon": "IconFolderArchive",
+          "extensions": [
+            ".zip",
+            ".7z",
+            ".rar",
+            ".gz",
+            ".bz2",
+            ".tar",
+            ".xz"
+          ]
+        },
+        {
+          "labelKey": "Documents",
+          "icon": "IconFolderDocument",
+          "extensions": [
+            ".pdf",
+            ".txt",
+            ".doc",
+            ".docx",
+            ".xls",
+            ".xlsx",
+            ".ppt",
+            ".pptx",
+            ".odt"
+          ]
+        },
+        {
+          "labelKey": "Music",
+          "icon": "IconFolderMusic",
+          "extensions": [
+            ".mp3",
+            ".wav",
+            ".flac",
+            ".ogg",
+            ".m4a",
+            ".aac"
+          ]
+        },
+        {
+          "labelKey": "Programs",
+          "icon": "IconFolderProgram",
+          "extensions": [
+            ".exe",
+            ".msi",
+            ".deb",
+            ".rpm",
+            ".appimage",
+            ".apk"
+          ]
+        },
+        {
+          "labelKey": "Video",
+          "icon": "IconFolderVideo",
+          "extensions": [
+            ".mp4",
+            ".mkv",
+            ".webm",
+            ".mov",
+            ".avi"
+          ]
+        }
+      ]
+    },
+    {
+      "labelKey": "ActiveTransfers",
+      "filter": "Active"
+    }
+  ]
+}

@@ -1,16 +1,42 @@
 <Window xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:loc="using:FileDownloadManager.UI.Resources.Localization"
         x:Class="FileDownloadManager.UI.Appearance.OptionsWindow" Title="{x:Static loc:Strings.Options}"
-        Width="390" SizeToContent="Height" CanResize="False" ShowInTaskbar="False" WindowStartupLocation="CenterOwner">
-  <StackPanel Margin="18" Spacing="12">
-    <TextBlock Classes="section" Text="{x:Static loc:Strings.IconStyle}" />
-    <StackPanel Spacing="4">
-      <RadioButton x:Name="SystemStyle" GroupName="IconStyle" Content="{x:Static loc:Strings.SystemIcons}" />
-      <RadioButton x:Name="BundledStyle" GroupName="IconStyle" Content="{x:Static loc:Strings.BundledIcons}" />
-    </StackPanel>
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
-      <Button IsDefault="True" Classes="accent" Content="{x:Static loc:Strings.Confirm}" Click="ConfirmClicked" />
+        xmlns:settings="using:FileDownloadManager.UI.Settings"
+        Width="640" Height="520" MinWidth="500" MinHeight="410" ShowInTaskbar="False" WindowStartupLocation="CenterOwner">
+  <Grid Margin="18" RowDefinitions="*,Auto,Auto" RowSpacing="10">
+    <TabControl>
+      <TabItem Header="{x:Static loc:Strings.AppearanceSettings}">
+        <ScrollViewer>
+          <StackPanel Margin="8" Spacing="8">
+            <TextBlock Classes="section" Text="{x:Static loc:Strings.Theme}" />
+            <ComboBox x:Name="ThemeChoices" AutomationProperties.Name="{x:Static loc:Strings.Theme}">
+              <ComboBoxItem Content="{x:Static loc:Strings.DarkTheme}" Tag="{x:Static settings:ThemePreference.Dark}" />
+              <ComboBoxItem Content="{x:Static loc:Strings.LightTheme}" Tag="{x:Static settings:ThemePreference.Light}" />
+              <ComboBoxItem Content="{x:Static loc:Strings.SystemTheme}" Tag="{x:Static settings:ThemePreference.System}" />
+            </ComboBox>
+            <TextBlock Classes="section" Text="{x:Static loc:Strings.Language}" />
+            <ComboBox x:Name="LanguageChoices" AutomationProperties.Name="{x:Static loc:Strings.Language}" />
+            <TextBlock Text="{x:Static loc:Strings.LanguageRestart}" TextWrapping="Wrap" />
+            <TextBlock Text="{x:Static loc:Strings.LanguageFiles}" />
+            <SelectableTextBlock x:Name="LanguagePath" TextWrapping="Wrap" />
+            <TextBlock Classes="section" Text="{x:Static loc:Strings.IconStyle}" />
+            <RadioButton x:Name="SystemStyle" GroupName="IconStyle" Content="{x:Static loc:Strings.SystemIcons}" />
+            <RadioButton x:Name="BundledStyle" GroupName="IconStyle" Content="{x:Static loc:Strings.BundledIcons}" />
+          </StackPanel>
+        </ScrollViewer>
+      </TabItem>
+      <TabItem Header="{x:Static loc:Strings.CategoriesSettings}">
+        <Grid Margin="8" RowDefinitions="Auto,*" RowSpacing="8">
+          <TextBlock Text="{x:Static loc:Strings.CategoryEditorHelp}" TextWrapping="Wrap" />
+          <TextBox Grid.Row="1" x:Name="CategoriesEditor" AcceptsReturn="True" TextWrapping="NoWrap"
+                   AutomationProperties.Name="{x:Static loc:Strings.CategoriesSettings}" />
+        </Grid>
+      </TabItem>
+    </TabControl>
+    <TextBlock Grid.Row="1" x:Name="Feedback" IsVisible="False" TextWrapping="Wrap" />
+    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+      <Button IsDefault="True" Classes="accent" Content="{x:Static loc:Strings.SaveSettings}" Click="ConfirmClicked" />
       <Button IsCancel="True" Content="{x:Static loc:Strings.CancelDialog}" Click="CancelClicked" />
     </StackPanel>
-  </StackPanel>
+  </Grid>
 </Window>

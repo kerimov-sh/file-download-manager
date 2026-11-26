@@ -42,7 +42,8 @@ Apply SOLID to concrete responsibilities. For example, changing a toolbar label 
 
 - Use framework enums and typed APIs for protocol values. Give meaningful fixed literals named constants near the component that owns them. Put configurable limits and defaults in named, validated settings.
 - Keep persisted identifiers and message keys stable across releases. Display names and translated text may change independently.
-- Store desktop text under `Resources/Localization/` in .resx files. English is the first and fallback language. Use typed resource access where available. Localize complete messages and format dates, numbers, and quantities using the selected culture.
+- Ship desktop text as editable JSON files under `Resources/Localization/`. Load the selected language at startup with English per-key fallback. Use the typed `Strings` properties for UI labels and keep resource values outside assemblies. Localize complete messages and format dates, numbers, and quantities using the selected culture.
+- Keep default category trees, file-extension rules, and editable desktop preference values in external JSON. Expose new desktop preferences in Properties and validate changes before writing the per-user settings file.
 - Keep icons, images, and Avalonia theme definitions under separate `Resources/Icons/`, `Resources/Images/`, and `Resources/Themes/` folders. Keep browser extension messages in the extension's own `_locales/` directory.
 
 ## Cooperative cancellation

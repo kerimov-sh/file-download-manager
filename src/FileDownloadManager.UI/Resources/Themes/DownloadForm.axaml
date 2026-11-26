@@ -1,19 +1,5 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-  <Styles.Resources>
-    <SolidColorBrush x:Key="WindowSurface">#232730</SolidColorBrush>
-    <SolidColorBrush x:Key="PanelSurface">#272C36</SolidColorBrush>
-    <SolidColorBrush x:Key="HeaderSurface">#2D333F</SolidColorBrush>
-    <SolidColorBrush x:Key="GridRule">#343B47</SolidColorBrush>
-    <SolidColorBrush x:Key="ToolbarAddBrush">#80BDAC</SolidColorBrush>
-    <SolidColorBrush x:Key="ToolbarRetryBrush">#85B3DA</SolidColorBrush>
-    <SolidColorBrush x:Key="ToolbarStopBrush">#D39A8A</SolidColorBrush>
-    <SolidColorBrush x:Key="ToolbarStopAllBrush">#CDA384</SolidColorBrush>
-    <SolidColorBrush x:Key="ToolbarRemoveBrush">#C59BBE</SolidColorBrush>
-    <SolidColorBrush x:Key="ToolbarClearBrush">#BBA1CC</SolidColorBrush>
-    <SolidColorBrush x:Key="ToolbarOptionsBrush">#AAA9D9</SolidColorBrush>
-    <SolidColorBrush x:Key="CategoryIconBrush">#D0B679</SolidColorBrush>
-  </Styles.Resources>
   <Style Selector="Window">
     <Setter Property="Background" Value="{DynamicResource WindowSurface}" />
   </Style>

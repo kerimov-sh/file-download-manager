@@ -1,11 +1,11 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="FileDownloadManager.UI.Startup.App"
-             RequestedThemeVariant="Dark">
+             x:Class="FileDownloadManager.UI.Startup.App">
   <Application.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
         <ResourceInclude Source="avares://FileDownloadManager.UI/Resources/Icons/DownloadIcons.axaml" />
+        <ResourceInclude Source="avares://FileDownloadManager.UI/Resources/Themes/DesktopPalette.axaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Application.Resources>
