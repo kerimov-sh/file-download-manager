@@ -1,6 +1,7 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="FileDownloadManager.UI.App">
+             x:Class="FileDownloadManager.UI.App"
+             RequestedThemeVariant="Dark">
   <Application.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
@@ -9,7 +10,12 @@
     </ResourceDictionary>
   </Application.Resources>
   <Application.Styles>
-    <FluentTheme />
+    <FluentTheme>
+      <FluentTheme.Palettes>
+        <ColorPaletteResources x:Key="Dark" Accent="#94ADE0" RegionColor="#232730"
+                               AltHigh="#232730" BaseHigh="#E3E8F0" />
+      </FluentTheme.Palettes>
+    </FluentTheme>
     <StyleInclude Source="/Resources/Themes/DownloadForm.axaml" />
   </Application.Styles>
 </Application>

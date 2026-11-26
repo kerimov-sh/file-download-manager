@@ -92,7 +92,6 @@ public sealed partial class MainWindow : Window
         select ??= Rows.SelectedItem as DownloadRow;
         Rows.ItemsSource = visible;
         Rows.SelectedItem = select is not null && visible.Contains(select) ? select : null;
-        Empty.IsVisible = visible.Count == 0;
         Count.Text = string.Format(CultureInfo.CurrentCulture, Strings.LibraryCount, visible.Count);
         UpdateActions();
     }

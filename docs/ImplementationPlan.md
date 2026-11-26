@@ -29,6 +29,8 @@ Windows desktop automation verified category selection, live percentage on a loc
 
 **Add URL** opens a separate dialog for the source, destination, and description. **Options** opens a separate appearance dialog that applies the icon choice on confirmation. The category tree uses bundled Bootstrap folder and file-type icons. Windows desktop automation verified both dialogs, URL validation, applying the icon choice, and a download through the new dialog.
 
+The desktop defaults to a dark palette with subdued grid lines. Empty categories leave the grid unobstructed and show a zero count in the status bar. Windows desktop automation verified the empty view and a subsequent download.
+
 | Step | Deliverable | Acceptance check |
 |---|---|---|
 | 0. Foundation | Confirm repository state, scaffold the solution and the first required projects, establish build and test entry points. | Build a clean checkout and verify project names and reference direction against the [coding standards](CodingStandards.md). |

@@ -37,7 +37,6 @@
   <data name="FileSize" xml:space="preserve"><value>Size</value></data>
   <data name="TransferStatus" xml:space="preserve"><value>Status</value></data>
   <data name="Source" xml:space="preserve"><value>Source</value></data>
-  <data name="NoEntries" xml:space="preserve"><value>No downloads in this view</value></data>
   <data name="Dismiss" xml:space="preserve"><value>Close form</value></data>
   <data name="Ready" xml:space="preserve"><value>Ready</value></data>
   <data name="LibraryCount" xml:space="preserve"><value>Downloads: {0}</value></data>
