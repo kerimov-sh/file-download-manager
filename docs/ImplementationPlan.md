@@ -15,7 +15,9 @@ The goal is functional parity with Internet Download Manager on Windows and Linu
 
 ## Milestones and acceptance checks
 
-The repository contains the coding standards and the empty [FileDownloadManager solution](../FileDownloadManager.slnx). Project scaffolding and implementation are pending.
+The first review increment adds the Domain, Application, and Infrastructure projects to the [solution](../FileDownloadManager.slnx). The `IFileDownloader.DownloadAsync` entry point accepts an HTTP(S) source, a destination in an existing directory, and a cancellation token. The single-stream implementation publishes completed files without overwriting an existing destination.
+
+Run `dotnet build` from the repository root, then `dotnet run --no-build --project tests/FileDownloadManager.TransferChecks`. The Windows integration run exercised a local HTTP server, redirects, unknown response length, byte equality, destination collisions, missing resources, unsolicited partial responses, truncation, and cancellation. Linux execution and TLS-specific tests are pending. The desktop interface, progress reporting, pause/resume, retries, and recovery after process interruption remain later increments.
 
 | Step | Deliverable | Acceptance check |
 |---|---|---|

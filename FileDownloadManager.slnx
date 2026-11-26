@@ -1,2 +1,10 @@
 <Solution>
+  <Folder Name="/src/">
+    <Project Path="src/FileDownloadManager.Application/FileDownloadManager.Application.csproj" />
+    <Project Path="src/FileDownloadManager.Domain/FileDownloadManager.Domain.csproj" />
+    <Project Path="src/FileDownloadManager.Infrastructure/FileDownloadManager.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/FileDownloadManager.TransferChecks/FileDownloadManager.TransferChecks.csproj" />
+  </Folder>
 </Solution>
