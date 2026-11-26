@@ -3,17 +3,17 @@
         FontSize="12" x:Class="FileDownloadManager.UI.Downloads.Library.MainWindow" Title="{x:Static loc:Strings.Title}"
         Width="1024" Height="620" MinWidth="710" MinHeight="500" WindowStartupLocation="CenterScreen">
   <Grid RowDefinitions="Auto,Auto,*,Auto">
-    <Menu>
-      <MenuItem Header="{x:Static loc:Strings.Tasks}">
+    <Menu HorizontalAlignment="Left">
+      <MenuItem Classes="topMenu" Header="{x:Static loc:Strings.Tasks}">
         <MenuItem x:Name="AddMenu" Header="{x:Static loc:Strings.AddUrl}" Click="AddClicked" />
         <Separator />
         <MenuItem Header="{x:Static loc:Strings.Exit}" Click="ExitClicked" />
       </MenuItem>
-      <MenuItem Header="{x:Static loc:Strings.Downloads}">
+      <MenuItem Classes="topMenu" Header="{x:Static loc:Strings.Downloads}">
         <MenuItem x:Name="StopMenu" Header="{x:Static loc:Strings.StopTransfer}" Click="CancelClicked" IsEnabled="False" />
         <MenuItem x:Name="RemoveMenu" Header="{x:Static loc:Strings.RemoveEntry}" Click="RemoveClicked" IsEnabled="False" />
       </MenuItem>
-      <MenuItem Header="{x:Static loc:Strings.View}">
+      <MenuItem Classes="topMenu" Header="{x:Static loc:Strings.View}">
         <MenuItem Header="{x:Static loc:Strings.Options}" Click="OptionsClicked" />
       </MenuItem>
     </Menu>

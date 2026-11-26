@@ -101,4 +101,17 @@ public static class Strings
     public static string InvalidExtension => Get(nameof(InvalidExtension));
     public static string InvalidCategories => Get(nameof(InvalidCategories));
     public static string SaveSettings => Get(nameof(SaveSettings));
+    public static string CategoryName => Get(nameof(CategoryName));
+    public static string CategoryExtensions => Get(nameof(CategoryExtensions));
+    public static string CategoryExtensionsHint => Get(nameof(CategoryExtensionsHint));
+    public static string CategoryFilter => Get(nameof(CategoryFilter));
+    public static string CategoryIcon => Get(nameof(CategoryIcon));
+    public static string DefaultFolder => Get(nameof(DefaultFolder));
+    public static string InheritFilter => Get(nameof(InheritFilter));
+    public static string AddCategory => Get(nameof(AddCategory));
+    public static string AddSubcategory => Get(nameof(AddSubcategory));
+    public static string RemoveCategory => Get(nameof(RemoveCategory));
+    public static string MoveCategoryUp => Get(nameof(MoveCategoryUp));
+    public static string MoveCategoryDown => Get(nameof(MoveCategoryDown));
+    public static string NewCategory => Get(nameof(NewCategory));
 }

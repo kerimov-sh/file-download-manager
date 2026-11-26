@@ -2,6 +2,8 @@
         xmlns:loc="using:FileDownloadManager.UI.Resources.Localization"
         x:Class="FileDownloadManager.UI.Appearance.OptionsWindow" Title="{x:Static loc:Strings.Options}"
         xmlns:settings="using:FileDownloadManager.UI.Settings"
+        xmlns:appearance="using:FileDownloadManager.UI.Appearance"
+        xmlns:categories="using:FileDownloadManager.UI.Appearance.Categories"
         Width="640" Height="520" MinWidth="500" MinHeight="410" ShowInTaskbar="False" WindowStartupLocation="CenterOwner">
   <Grid Margin="18" RowDefinitions="*,Auto,Auto" RowSpacing="10">
     <TabControl>
@@ -15,7 +17,13 @@
               <ComboBoxItem Content="{x:Static loc:Strings.SystemTheme}" Tag="{x:Static settings:ThemePreference.System}" />
             </ComboBox>
             <TextBlock Classes="section" Text="{x:Static loc:Strings.Language}" />
-            <ComboBox x:Name="LanguageChoices" AutomationProperties.Name="{x:Static loc:Strings.Language}" />
+            <ComboBox x:Name="LanguageChoices" AutomationProperties.Name="{x:Static loc:Strings.Language}">
+              <ComboBox.ItemTemplate>
+                <DataTemplate x:DataType="appearance:LanguageChoice">
+                  <TextBlock Text="{Binding Name}" />
+                </DataTemplate>
+              </ComboBox.ItemTemplate>
+            </ComboBox>
             <TextBlock Text="{x:Static loc:Strings.LanguageRestart}" TextWrapping="Wrap" />
             <TextBlock Text="{x:Static loc:Strings.LanguageFiles}" />
             <SelectableTextBlock x:Name="LanguagePath" TextWrapping="Wrap" />
@@ -26,10 +34,59 @@
         </ScrollViewer>
       </TabItem>
       <TabItem Header="{x:Static loc:Strings.CategoriesSettings}">
-        <Grid Margin="8" RowDefinitions="Auto,*" RowSpacing="8">
-          <TextBlock Text="{x:Static loc:Strings.CategoryEditorHelp}" TextWrapping="Wrap" />
-          <TextBox Grid.Row="1" x:Name="CategoriesEditor" AcceptsReturn="True" TextWrapping="NoWrap"
-                   AutomationProperties.Name="{x:Static loc:Strings.CategoriesSettings}" />
+        <Grid Margin="8" RowDefinitions="Auto,*" ColumnDefinitions="2*,3*" RowSpacing="8" ColumnSpacing="12">
+          <WrapPanel Grid.ColumnSpan="2" ItemSpacing="6" LineSpacing="6">
+            <Button Content="{x:Static loc:Strings.AddCategory}" Click="AddCategoryClicked" />
+            <Button x:Name="AddChildButton" Content="{x:Static loc:Strings.AddSubcategory}" Click="AddSubcategoryClicked" IsEnabled="False" />
+            <Button x:Name="RemoveCategoryButton" Content="{x:Static loc:Strings.RemoveCategory}" Click="RemoveCategoryClicked" IsEnabled="False" />
+            <Button x:Name="MoveUpButton" Content="{x:Static loc:Strings.MoveCategoryUp}" Click="MoveCategoryUpClicked" IsEnabled="False" />
+            <Button x:Name="MoveDownButton" Content="{x:Static loc:Strings.MoveCategoryDown}" Click="MoveCategoryDownClicked" IsEnabled="False" />
+          </WrapPanel>
+          <TreeView Grid.Row="1" x:Name="CategoryTree" SelectionChanged="CategorySelectionChanged"
+                    AutomationProperties.Name="{x:Static loc:Strings.CategoriesSettings}">
+            <TreeView.Styles>
+              <Style Selector="TreeViewItem">
+                <Setter Property="IsExpanded" Value="True" />
+                <Setter Property="AutomationProperties.Name" Value="{ReflectionBinding Name}" />
+              </Style>
+            </TreeView.Styles>
+            <TreeView.ItemTemplate>
+              <TreeDataTemplate x:DataType="categories:CategoryDraft" ItemsSource="{Binding Children}">
+                <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis" />
+              </TreeDataTemplate>
+            </TreeView.ItemTemplate>
+          </TreeView>
+          <ScrollViewer Grid.Row="1" Grid.Column="1">
+            <ContentControl x:Name="CategoryFields">
+              <ContentControl.ContentTemplate>
+                <DataTemplate x:DataType="categories:CategoryDraft">
+                  <StackPanel Spacing="7">
+                    <TextBlock Text="{x:Static loc:Strings.CategoryName}" />
+                    <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             AutomationProperties.Name="{x:Static loc:Strings.CategoryName}" />
+                    <TextBlock Text="{x:Static loc:Strings.CategoryExtensions}" />
+                    <TextBox Text="{Binding Extensions, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             AutomationProperties.Name="{x:Static loc:Strings.CategoryExtensions}" />
+                    <TextBlock Text="{x:Static loc:Strings.CategoryExtensionsHint}" TextWrapping="Wrap" />
+                    <TextBlock Text="{x:Static loc:Strings.CategoryFilter}" />
+                    <ComboBox ItemsSource="{Binding Filters}" SelectedItem="{Binding Filter, Mode=TwoWay}"
+                              AutomationProperties.Name="{x:Static loc:Strings.CategoryFilter}">
+                      <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="categories:CategoryFilterChoice"><TextBlock Text="{Binding Name}" /></DataTemplate>
+                      </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <TextBlock Text="{x:Static loc:Strings.CategoryIcon}" />
+                    <ComboBox ItemsSource="{Binding Icons}" SelectedItem="{Binding Icon, Mode=TwoWay}"
+                              AutomationProperties.Name="{x:Static loc:Strings.CategoryIcon}">
+                      <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="categories:CategoryIconChoice"><TextBlock Text="{Binding Name}" /></DataTemplate>
+                      </ComboBox.ItemTemplate>
+                    </ComboBox>
+                  </StackPanel>
+                </DataTemplate>
+              </ContentControl.ContentTemplate>
+            </ContentControl>
+          </ScrollViewer>
         </Grid>
       </TabItem>
     </TabControl>

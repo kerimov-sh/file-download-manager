@@ -3,6 +3,10 @@
   <Style Selector="Window">
     <Setter Property="Background" Value="{DynamicResource WindowSurface}" />
   </Style>
+  <Style Selector="MenuItem.topMenu">
+    <Setter Property="Padding" Value="8,3" />
+    <Setter Property="MinHeight" Value="24" />
+  </Style>
   <Style Selector="Button">
     <Setter Property="Padding" Value="16,8" />
     <Setter Property="CornerRadius" Value="6" />

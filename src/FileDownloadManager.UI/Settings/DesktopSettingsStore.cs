@@ -74,17 +74,6 @@ internal sealed class DesktopSettingsStore
         .OrderBy(name => name, StringComparer.OrdinalIgnoreCase)
         .ToArray();
 
-    public static string FormatCategories(CategoryDefinition[] categories) =>
-        JsonSerializer.Serialize(categories, JsonOptions);
-
-    public static CategoryDefinition[] ParseCategories(string text)
-    {
-        var categories = JsonSerializer.Deserialize<CategoryDefinition[]>(text, JsonOptions)
-            ?? throw new JsonException(Strings.InvalidCategories);
-        ValidateCategories(categories);
-        return categories;
-    }
-
     public void Save(DesktopPreferences preferences)
     {
         ValidateCategories(preferences.Categories);

@@ -84,5 +84,18 @@
   "InvalidCategory": "Every category needs a name or a translation key.",
   "InvalidExtension": "Invalid file extension: {0}",
   "InvalidCategories": "Enter a valid category list.",
-  "SaveSettings": "Save"
+  "SaveSettings": "Save",
+  "CategoryName": "Folder name",
+  "CategoryExtensions": "File extensions",
+  "CategoryExtensionsHint": "For example, zip, pdf, tar.gz. Leave blank for all file types.",
+  "CategoryFilter": "Download status",
+  "CategoryIcon": "Folder icon",
+  "DefaultFolder": "Folder",
+  "InheritFilter": "Inherit from parent",
+  "AddCategory": "Add folder",
+  "AddSubcategory": "Add subfolder",
+  "RemoveCategory": "Remove folder",
+  "MoveCategoryUp": "Move up",
+  "MoveCategoryDown": "Move down",
+  "NewCategory": "New folder"
 }

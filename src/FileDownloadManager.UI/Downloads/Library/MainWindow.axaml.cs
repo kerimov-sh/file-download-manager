@@ -2,9 +2,13 @@ using System.Globalization;
 using System.Net.Http;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Documents;
+using Avalonia.Controls.Primitives;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Styling;
+using Avalonia.VisualTree;
 using FileDownloadManager.DownloadContracts.Transfers;
 using FileDownloadManager.TransferModel.Transfers;
 using FileDownloadManager.UI.Appearance;
@@ -17,6 +21,9 @@ namespace FileDownloadManager.UI.Downloads.Library;
 public sealed partial class MainWindow : Window
 {
     private const string EmptyGridClass = "emptyGrid";
+    private const string ColumnResizerPart = "PART_Resizer";
+    private const double ColumnContentInset = 16;
+    private const double MinimumAutoFitWidth = 40;
     public required IFileDownloader Downloader { private get; init; }
     private readonly CancellationTokenSource _lifetime = new();
     private readonly List<DownloadRow> _library = [];
@@ -36,6 +43,7 @@ public sealed partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        Rows.AddHandler(PointerPressedEvent, AutoFitColumn, RoutingStrategies.Tunnel);
         if (OperatingSystem.IsWindows())
             FontFamily = new FontFamily("Segoe UI");
         Grouping.SelectedIndex = 0;
@@ -109,6 +117,41 @@ public sealed partial class MainWindow : Window
     private void GroupingChanged(object? sender, SelectionChangedEventArgs args) => RefreshRows();
 
     private DownloadRow? SelectedDownload => (Rows.SelectedItem as DownloadGridItem)?.Download;
+
+    private void AutoFitColumn(object? sender, PointerPressedEventArgs args)
+    {
+        if (args.ClickCount != 2 || !args.GetCurrentPoint(Rows).Properties.IsLeftButtonPressed ||
+            args.Source is not Visual source ||
+            source.FindAncestorOfType<Thumb>(includeSelf: true) is not { Name: ColumnResizerPart } thumb ||
+            thumb.FindAncestorOfType<TableViewColumnHeader>() is not { Column: { } column } header)
+            return;
+
+        // Handle the second press before the resize thumb starts another drag.
+        args.Handled = true;
+        var label = (column.Header as Button)?.Content as string ?? string.Empty;
+        var headerText = new TextBlock { Text = label, FontWeight = header.FontWeight };
+        var width = MeasureColumnContent(headerText);
+        if (column.CellTemplate is { } template)
+        {
+            foreach (var item in Rows.Items.OfType<DownloadGridItem>())
+            {
+                if (item.IsGroup || template.Build(item) is not { } cell)
+                    continue;
+                cell.DataContext = item;
+                width = Math.Max(width, MeasureColumnContent(cell));
+            }
+        }
+
+        column.Width = new GridLength(Math.Max(MinimumAutoFitWidth, Math.Ceiling(width + ColumnContentInset)));
+    }
+
+    private double MeasureColumnContent(Control content)
+    {
+        TextElement.SetFontFamily(content, FontFamily);
+        TextElement.SetFontSize(content, FontSize);
+        content.Measure(Size.Infinity);
+        return content.DesiredSize.Width;
+    }
 
     private void SortClicked(object? sender, RoutedEventArgs args)
     {
