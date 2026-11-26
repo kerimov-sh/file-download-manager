@@ -13,7 +13,7 @@ Use .NET and Microsoft packages for application code. Avalonia and its required 
 | TransferModel | Download requests, states, and rules for ranges and completion | .NET base types |
 | DownloadContracts | Operations that callers can request from the engine | TransferModel |
 | Engine | Transfer execution, protocol handling, scheduling, partial files, and checkpoints | DownloadContracts and TransferModel |
-| UI (planned) | Avalonia windows, localization, and desktop lifetime | Uses DownloadContracts and TransferModel. Startup wires in Engine. |
+| UI | Avalonia windows, localization, and desktop lifetime | Uses DownloadContracts and TransferModel. Startup wires in Engine. |
 
 Name each library for its role in the download manager. Keep its folder, project filename, and root namespace aligned.
 

@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <NeutralLanguage>en</NeutralLanguage>
+    <AvaloniaVersion>12.2.0</AvaloniaVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
+    <ProjectReference Include="../FileDownloadManager.Engine/FileDownloadManager.Engine.csproj" />
+    <ProjectReference Include="../FileDownloadManager.DownloadContracts/FileDownloadManager.DownloadContracts.csproj" />
+    <ProjectReference Include="../FileDownloadManager.TransferModel/FileDownloadManager.TransferModel.csproj" />
+    <EmbeddedResource Update="Resources/Localization/Strings.resx">
+      <StronglyTypedLanguage>CSharp</StronglyTypedLanguage>
+      <StronglyTypedNamespace>FileDownloadManager.UI.Resources.Localization</StronglyTypedNamespace>
+      <StronglyTypedClassName>Strings</StronglyTypedClassName>
+      <StronglyTypedFileName>$(IntermediateOutputPath)Strings.g.cs</StronglyTypedFileName>
+      <PublicClass>true</PublicClass>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

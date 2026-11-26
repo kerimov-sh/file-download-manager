@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader>
+  <data name="Title" xml:space="preserve"><value>File Download Manager</value></data>
+  <data name="Heading" xml:space="preserve"><value>New download</value></data>
+  <data name="Url" xml:space="preserve"><value>Download URL</value></data>
+  <data name="Destination" xml:space="preserve"><value>Save file as</value></data>
+  <data name="Browse" xml:space="preserve"><value>Browse…</value></data>
+  <data name="Start" xml:space="preserve"><value>Start download</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel download</value></data>
+  <data name="Exit" xml:space="preserve"><value>Exit</value></data>
+  <data name="InvalidUrl" xml:space="preserve"><value>Enter a valid HTTP or HTTPS URL.</value></data>
+  <data name="InvalidDestination" xml:space="preserve"><value>Enter a full file path in an existing folder.</value></data>
+  <data name="AlreadyExists" xml:space="preserve"><value>A file already exists at this path. Choose a new filename.</value></data>
+  <data name="Downloading" xml:space="preserve"><value>Downloading…</value></data>
+  <data name="Completed" xml:space="preserve"><value>Download complete.</value></data>
+  <data name="Cancelled" xml:space="preserve"><value>Download cancelled.</value></data>
+  <data name="Failure" xml:space="preserve"><value>Download failed: {0}</value></data>
+  <data name="PickerTitle" xml:space="preserve"><value>Choose a download destination</value></data>
+  <data name="LocalOnly" xml:space="preserve"><value>Choose a file on the local filesystem.</value></data>
+  <data name="DestinationHint" xml:space="preserve"><value>Choose a folder and filename</value></data>
+  <data name="UrlHint" xml:space="preserve"><value>https://example.com/file.zip</value></data>
+</root>

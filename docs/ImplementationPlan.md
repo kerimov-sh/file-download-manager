@@ -7,7 +7,7 @@ The goal is functional parity with Internet Download Manager on Windows and Linu
 | Topic | Decision |
 |---|---|
 | Runtime and UI | .NET 10 LTS, shared Avalonia desktop UI. Plain JavaScript is approved for browser extensions. |
-| Architecture | TransferModel, DownloadContracts, Engine, and the planned Avalonia UI. Add CommandLine and BrowserHost projects when their milestones need them. Use the solution prefix for every project. |
+| Architecture | TransferModel, DownloadContracts, Engine, and the Avalonia UI. Add CommandLine and BrowserHost projects when their milestones need them. Use the solution prefix for every project. |
 | Application lifetime | Closing the main window leaves the program running. Reopening reconnects to the current transfers. Explicit Exit saves progress and ends transfers and scheduling. User launch starts the program. |
 | Languages | English first and as fallback. Keep translations, themes, icons, and images separate. |
 | Linux validation | Ubuntu LTS is a proposed first test distribution. Record the release, display session, and desktop environment for each desktop integration test. |
@@ -17,7 +17,9 @@ The goal is functional parity with Internet Download Manager on Windows and Linu
 
 The first review increment adds the TransferModel, DownloadContracts, and Engine projects to the [solution](../FileDownloadManager.slnx). The `IFileDownloader.DownloadAsync` entry point accepts an HTTP(S) source, a destination in an existing directory, and a cancellation token. The single-stream implementation publishes completed files without overwriting an existing destination.
 
-Run `dotnet build` from the repository root, then `dotnet run --no-build --project tests/FileDownloadManager.TransferChecks`. The Windows integration run exercised a local HTTP server, redirects, unknown response length, byte equality, destination collisions, missing resources, unsolicited partial responses, truncation, and cancellation. Linux execution and TLS-specific tests are pending. The desktop interface, progress reporting, pause/resume, retries, and recovery after process interruption remain later increments.
+Run `dotnet build` from the repository root, then `dotnet run --no-build --project tests/FileDownloadManager.TransferChecks`. The Windows integration run exercised a local HTTP server, redirects, unknown response length, byte equality, destination collisions, missing resources, unsolicited partial responses, truncation, and cancellation. Linux execution and TLS-specific tests are pending. Byte-level progress, pause/resume, retries, and recovery after process interruption remain later increments.
+
+Launch the English Avalonia form with `dotnet run --project src/FileDownloadManager.UI`. Enter an HTTP(S) URL and a full destination path or use Browse. The form supports one active transfer, an activity indicator, cancellation, and explicit Exit. Closing the window minimizes it to the taskbar. Windows desktop automation verified URL validation, starting a local download, its saved bytes, and Exit. Linux desktop testing, persistent download history, and scheduling are pending.
 
 | Step | Deliverable | Acceptance check |
 |---|---|---|
