@@ -1,0 +1,16 @@
+<Window xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:loc="using:FileDownloadManager.UI.Resources.Localization"
+        x:Class="FileDownloadManager.UI.OptionsWindow" Title="{x:Static loc:Strings.Options}"
+        Width="390" SizeToContent="Height" CanResize="False" ShowInTaskbar="False" WindowStartupLocation="CenterOwner">
+  <StackPanel Margin="18" Spacing="12">
+    <TextBlock Classes="section" Text="{x:Static loc:Strings.IconStyle}" />
+    <StackPanel Spacing="4">
+      <RadioButton x:Name="SystemStyle" GroupName="IconStyle" Content="{x:Static loc:Strings.SystemIcons}" />
+      <RadioButton x:Name="BundledStyle" GroupName="IconStyle" Content="{x:Static loc:Strings.BundledIcons}" />
+    </StackPanel>
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+      <Button IsDefault="True" Classes="accent" Content="{x:Static loc:Strings.Confirm}" Click="ConfirmClicked" />
+      <Button IsCancel="True" Content="{x:Static loc:Strings.CancelDialog}" Click="CancelClicked" />
+    </StackPanel>
+  </StackPanel>
+</Window>

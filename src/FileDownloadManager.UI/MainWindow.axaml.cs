@@ -3,7 +3,6 @@ using System.Net.Http;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Media;
-using Avalonia.Platform.Storage;
 using FileDownloadManager.DownloadContracts;
 using FileDownloadManager.TransferModel;
 using FileDownloadManager.UI.Resources.Localization;
@@ -18,6 +17,7 @@ public sealed partial class MainWindow : Window
     private DownloadRow? _activeRow;
     private CancellationTokenSource? _transfer;
     private bool _exiting;
+    private Window? _dialog;
     private readonly FontFamily? _systemIcons = WindowsIconTheme.FindInstalledFamily();
 
     public MainWindow()
@@ -57,13 +57,31 @@ public sealed partial class MainWindow : Window
         Activate();
     }
 
-    private void AddClicked(object? sender, RoutedEventArgs args)
+    private async void AddClicked(object? sender, RoutedEventArgs args)
     {
-        Editor.IsVisible = true;
-        SourceUrl.Focus();
+        if (_dialog is not null || _transfer is not null || _exiting)
+            return;
+
+        var result = await ShowOwnedDialogAsync<DownloadDialogResult?>(new AddDownloadWindow());
+        if (result is not null && !_exiting)
+            await StartTransferAsync(result.Request, result.Description, _lifetime.Token);
     }
 
-    private void DismissClicked(object? sender, RoutedEventArgs args) => Editor.IsVisible = false;
+    private async Task<TResult> ShowOwnedDialogAsync<TResult>(Window dialog)
+    {
+        _dialog = dialog;
+        dialog.Icon = Icon;
+        dialog.FontFamily = FontFamily;
+        try
+        {
+            return await dialog.ShowDialog<TResult>(this);
+        }
+        finally
+        {
+            _dialog = null;
+        }
+    }
+
 
     private void FilterChanged(object? sender, SelectionChangedEventArgs args) => RefreshRows();
 
@@ -98,17 +116,33 @@ public sealed partial class MainWindow : Window
         RefreshRows();
     }
 
-    private void RetryClicked(object? sender, RoutedEventArgs args)
+    private async void RetryClicked(object? sender, RoutedEventArgs args)
     {
-        if (Rows.SelectedItem is not DownloadRow row || _activeRow is not null)
+        if (Rows.SelectedItem is not DownloadRow { Category: LibraryFilter.Incomplete } row ||
+            _transfer is not null || _exiting)
             return;
-        SourceUrl.Text = row.Source.AbsoluteUri;
-        Destination.Text = row.Destination;
-        Notes.Text = row.Description;
-        StartClicked(sender, args);
+
+        if (File.Exists(row.Destination) || Directory.Exists(row.Destination))
+        {
+            Status.Text = Strings.AlreadyExists;
+            return;
+        }
+
+        await StartTransferAsync(new DownloadRequest(row.Source, row.Destination), row.Description, _lifetime.Token);
     }
 
-    private void OptionsClicked(object? sender, RoutedEventArgs args) => ViewMenu.IsSubMenuOpen = true;
+    private async void OptionsClicked(object? sender, RoutedEventArgs args)
+    {
+        if (_dialog is not null || _exiting)
+            return;
+
+        var options = new OptionsWindow();
+        options.SetIconStyle(_systemIcons is not null, SystemIcons.IsChecked == true);
+        var useSystem = await ShowOwnedDialogAsync<bool?>(options);
+        if (useSystem is bool confirmed && !_exiting)
+            SetIconTheme(confirmed ? _systemIcons : null);
+    }
+
 
     private void RemoveClicked(object? sender, RoutedEventArgs args)
     {
@@ -119,66 +153,16 @@ public sealed partial class MainWindow : Window
         }
     }
 
-    private async void BrowseClicked(object? sender, RoutedEventArgs args)
+    private async Task StartTransferAsync(DownloadRequest request, string description, CancellationToken cancellationToken)
     {
-        try
-        {
-            using var file = await StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
-            {
-                Title = Strings.PickerTitle,
-                ShowOverwritePrompt = false
-            });
-            if (file is null)
-                return;
-
-            if (file.TryGetLocalPath() is { } path)
-                Destination.Text = path;
-            else
-                Status.Text = Strings.LocalOnly;
-        }
-        catch (Exception error) when (error is IOException or UnauthorizedAccessException or PlatformNotSupportedException)
-        {
-            ShowError(error);
-        }
-    }
-
-    private async void StartClicked(object? sender, RoutedEventArgs args)
-    {
-        if (_transfer is not null || _exiting)
-            return;
-
-        if (!Uri.TryCreate(SourceUrl.Text?.Trim(), UriKind.Absolute, out var source) ||
-            (source.Scheme != Uri.UriSchemeHttp && source.Scheme != Uri.UriSchemeHttps) ||
-            string.IsNullOrEmpty(source.Host))
-        {
-            Status.Text = Strings.InvalidUrl;
-            SourceUrl.Focus();
-            return;
-        }
-
-        var path = Destination.Text;
-        if (string.IsNullOrWhiteSpace(path) || !Path.IsPathFullyQualified(path) ||
-            string.IsNullOrEmpty(Path.GetFileName(path)) || !Directory.Exists(Path.GetDirectoryName(path)))
-        {
-            Status.Text = Strings.InvalidDestination;
-            Destination.Focus();
-            return;
-        }
-
-        if (File.Exists(path) || Directory.Exists(path))
-        {
-            Status.Text = Strings.AlreadyExists;
-            return;
-        }
-
-        using var transfer = CancellationTokenSource.CreateLinkedTokenSource(_lifetime.Token);
+        var path = request.DestinationPath;
+        using var transfer = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
         _transfer = transfer;
         var metrics = new TransferMetrics();
-        var row = new DownloadRow(path, source, Notes.Text ?? string.Empty, LibraryFilter.Active,
+        var row = new DownloadRow(path, request.Source, description, LibraryFilter.Active,
             Strings.Downloading, string.Empty) { Metrics = metrics };
         _activeRow = row;
         _library.Insert(0, row);
-        Editor.IsVisible = false;
         Filters.SelectedItem = Filters.Items[0];
         RefreshRows(row);
         SetDownloading(true);
@@ -186,7 +170,7 @@ public sealed partial class MainWindow : Window
         var result = row with { Category = LibraryFilter.Incomplete, Status = Strings.Failed, Metrics = null };
         try
         {
-            await Downloader.DownloadAsync(new DownloadRequest(source, path),
+            await Downloader.DownloadAsync(request,
                 new Progress<TransferProgress>(metrics.Update), transfer.Token);
             Status.Text = Strings.Completed;
             result = result with { Category = LibraryFilter.Finished, Status = Strings.FinishedTransfers,
@@ -232,6 +216,7 @@ public sealed partial class MainWindow : Window
     {
         _exiting = true;
         _lifetime.Cancel();
+        _dialog?.Close();
         // Let the engine close the partial file before the last window ends the process.
         if (_transfer is null)
             Close();

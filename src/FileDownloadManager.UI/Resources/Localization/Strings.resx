@@ -65,4 +65,7 @@
   <data name="Kilobytes" xml:space="preserve"><value>{0:N1} KB</value></data>
   <data name="Megabytes" xml:space="preserve"><value>{0:N1} MB</value></data>
   <data name="Gigabytes" xml:space="preserve"><value>{0:N2} GB</value></data>
+  <data name="CancelDialog" xml:space="preserve"><value>Cancel</value></data>
+  <data name="Confirm" xml:space="preserve"><value>OK</value></data>
+  <data name="IconStyle" xml:space="preserve"><value>Toolbar and download icons</value></data>
 </root>

@@ -1,0 +1,27 @@
+<Window xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:loc="using:FileDownloadManager.UI.Resources.Localization"
+        x:Class="FileDownloadManager.UI.AddDownloadWindow" Title="{x:Static loc:Strings.AddUrl}"
+        Width="600" SizeToContent="Height" CanResize="False" ShowInTaskbar="False" WindowStartupLocation="CenterOwner">
+  <StackPanel Margin="18" Spacing="12">
+    <StackPanel Spacing="4">
+      <TextBlock Text="{x:Static loc:Strings.Url}" />
+      <TextBox x:Name="SourceUrl" AutomationProperties.Name="{x:Static loc:Strings.Url}" PlaceholderText="{x:Static loc:Strings.UrlHint}" />
+    </StackPanel>
+    <StackPanel Spacing="4">
+      <TextBlock Text="{x:Static loc:Strings.Destination}" />
+      <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+        <TextBox x:Name="Destination" AutomationProperties.Name="{x:Static loc:Strings.Destination}" PlaceholderText="{x:Static loc:Strings.DestinationHint}" />
+        <Button Grid.Column="1" Content="{x:Static loc:Strings.Browse}" Click="BrowseClicked" />
+      </Grid>
+    </StackPanel>
+    <StackPanel Spacing="4">
+      <TextBlock Text="{x:Static loc:Strings.Description}" />
+      <TextBox x:Name="Notes" AutomationProperties.Name="{x:Static loc:Strings.Description}" />
+    </StackPanel>
+    <TextBlock x:Name="Feedback" IsVisible="False" TextWrapping="Wrap" />
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+      <Button Classes="accent" IsDefault="True" Content="{x:Static loc:Strings.Start}" Click="StartClicked" />
+      <Button IsCancel="True" Content="{x:Static loc:Strings.CancelDialog}" Click="CancelClicked" />
+    </StackPanel>
+  </StackPanel>
+</Window>

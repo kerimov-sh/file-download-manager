@@ -13,9 +13,11 @@
         <MenuItem x:Name="StopMenu" Header="{x:Static loc:Strings.StopTransfer}" Click="CancelClicked" IsEnabled="False" />
         <MenuItem x:Name="RemoveMenu" Header="{x:Static loc:Strings.RemoveEntry}" Click="RemoveClicked" IsEnabled="False" />
       </MenuItem>
-      <MenuItem x:Name="ViewMenu" Header="{x:Static loc:Strings.View}">
+      <MenuItem Header="{x:Static loc:Strings.View}">
         <MenuItem x:Name="SystemIcons" Header="{x:Static loc:Strings.SystemIcons}" ToggleType="Radio" GroupName="IconStyle" Click="SystemIconsClicked" />
         <MenuItem x:Name="BundledIcons" Header="{x:Static loc:Strings.BundledIcons}" ToggleType="Radio" GroupName="IconStyle" Click="BundledIconsClicked" />
+        <Separator />
+        <MenuItem Header="{x:Static loc:Strings.Options}" Click="OptionsClicked" />
       </MenuItem>
     </Menu>
     <Border Grid.Row="1" Classes="toolbar">
@@ -80,7 +82,7 @@
             <TreeView.ItemTemplate>
               <TreeDataTemplate x:DataType="ui:DownloadCategory" ItemsSource="{Binding Children}">
                 <StackPanel Orientation="Horizontal" Spacing="5">
-                  <PathIcon Width="13" Height="13" Foreground="#BF9631" Data="{DynamicResource IconLibrary}" />
+                  <PathIcon Width="13" Height="13" Foreground="#B48928" Data="{Binding Icon}" />
                   <TextBlock Text="{Binding Name}" />
                 </StackPanel>
               </TreeDataTemplate>
@@ -88,26 +90,8 @@
           </TreeView>
         </DockPanel>
       </Border>
-      <Grid Grid.Column="1" RowDefinitions="Auto,*">
-        <Border x:Name="Editor" IsVisible="False" Classes="editor">
-          <StackPanel Spacing="8" x:Name="Fields">
-            <TextBlock Classes="section" Text="{x:Static loc:Strings.Heading}" />
-            <Grid ColumnDefinitions="100,*,Auto" RowDefinitions="Auto,Auto,Auto" RowSpacing="6" ColumnSpacing="8">
-              <TextBlock VerticalAlignment="Center" Text="{x:Static loc:Strings.Url}" />
-              <TextBox Grid.Column="1" Grid.ColumnSpan="2" x:Name="SourceUrl" AutomationProperties.Name="{x:Static loc:Strings.Url}" PlaceholderText="{x:Static loc:Strings.UrlHint}" />
-              <TextBlock Grid.Row="1" VerticalAlignment="Center" Text="{x:Static loc:Strings.Destination}" />
-              <TextBox Grid.Row="1" Grid.Column="1" x:Name="Destination" AutomationProperties.Name="{x:Static loc:Strings.Destination}" PlaceholderText="{x:Static loc:Strings.DestinationHint}" />
-              <Button Grid.Row="1" Grid.Column="2" Content="{x:Static loc:Strings.Browse}" Click="BrowseClicked" />
-              <TextBlock Grid.Row="2" VerticalAlignment="Center" Text="{x:Static loc:Strings.Description}" />
-              <TextBox x:Name="Notes" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" AutomationProperties.Name="{x:Static loc:Strings.Description}" />
-            </Grid>
-            <StackPanel Orientation="Horizontal" Spacing="8">
-              <Button x:Name="Start" Classes="accent" Content="{x:Static loc:Strings.Start}" Click="StartClicked" />
-              <Button Content="{x:Static loc:Strings.Dismiss}" Click="DismissClicked" />
-            </StackPanel>
-          </StackPanel>
-        </Border>
-        <Grid Grid.Row="1" RowDefinitions="Auto,*">
+      <Grid Grid.Column="1">
+        <Grid RowDefinitions="Auto,*">
           <Border Classes="columnHeader">
             <Grid ColumnDefinitions="2.3*,1*,1.1*,1*,1.2*,1.3*,1.5*">
               <Border Classes="cell" Grid.Column="0"><TextBlock Text="{x:Static loc:Strings.FileName}" TextTrimming="CharacterEllipsis" /></Border>

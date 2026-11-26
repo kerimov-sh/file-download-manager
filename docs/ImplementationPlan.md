@@ -27,6 +27,8 @@ The main window uses a compact icon toolbar, an expandable category tree, and a 
 
 Windows desktop automation verified category selection, live percentage on a local transfer, Stop, Retry, Clear finished, and saved file contents. Linux desktop verification is pending.
 
+**Add URL** opens a separate dialog for the source, destination, and description. **Options** opens a separate appearance dialog that applies the icon choice on confirmation. The category tree uses bundled Bootstrap folder and file-type icons. Windows desktop automation verified both dialogs, URL validation, applying the icon choice, and a download through the new dialog.
+
 | Step | Deliverable | Acceptance check |
 |---|---|---|
 | 0. Foundation | Confirm repository state, scaffold the solution and the first required projects, establish build and test entry points. | Build a clean checkout and verify project names and reference direction against the [coding standards](CodingStandards.md). |
