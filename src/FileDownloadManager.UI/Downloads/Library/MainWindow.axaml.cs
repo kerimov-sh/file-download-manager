@@ -3,11 +3,13 @@ using System.Net.Http;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Media;
-using FileDownloadManager.DownloadContracts;
-using FileDownloadManager.TransferModel;
+using FileDownloadManager.DownloadContracts.Transfers;
+using FileDownloadManager.TransferModel.Transfers;
+using FileDownloadManager.UI.Appearance;
+using FileDownloadManager.UI.Downloads.Add;
 using FileDownloadManager.UI.Resources.Localization;
 
-namespace FileDownloadManager.UI;
+namespace FileDownloadManager.UI.Downloads.Library;
 
 public sealed partial class MainWindow : Window
 {

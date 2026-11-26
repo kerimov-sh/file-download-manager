@@ -1,6 +1,6 @@
-using FileDownloadManager.TransferModel;
+using FileDownloadManager.TransferModel.Transfers;
 
-namespace FileDownloadManager.DownloadContracts;
+namespace FileDownloadManager.DownloadContracts.Transfers;
 
 public interface IFileDownloader
 {

@@ -3,6 +3,7 @@
 Read the [coding standards](docs/CodingStandards.md) before writing code. Use the [implementation plan](docs/ImplementationPlan.md) to find the current milestone, its acceptance criteria, and the decisions already made.
 
 - Work on the agreed milestone. Add projects when they first have a responsibility to implement.
+- Place source files in folders named for their feature or responsibility. Match namespaces to folders and keep each Avalonia view beside its code-behind.
 - Keep TransferModel and DownloadContracts independent of Avalonia and operating-system APIs. Follow the project boundaries in the coding standards.
 - Preserve saved downloads and queues when changing persistence or recovery behavior.
 - Once the solution exists, run `dotnet build` and the applicable tests from the repository root. Exercise changes through the affected entry point. For platform-specific behavior, record the OS and desktop environment actually tested.

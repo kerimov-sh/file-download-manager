@@ -1,13 +1,13 @@
 using System.Net;
-using FileDownloadManager.DownloadContracts;
-using FileDownloadManager.TransferModel;
-using FileDownloadManager.Engine;
+using FileDownloadManager.DownloadContracts.Transfers;
+using FileDownloadManager.TransferModel.Transfers;
+using FileDownloadManager.Engine.Http;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
-namespace FileDownloadManager.TransferChecks;
+namespace FileDownloadManager.TransferChecks.Http;
 
 internal static class Program
 {

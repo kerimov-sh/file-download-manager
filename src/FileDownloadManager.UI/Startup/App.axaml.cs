@@ -4,10 +4,11 @@ using Avalonia.Controls;
 using Avalonia.Platform;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using FileDownloadManager.Engine;
+using FileDownloadManager.Engine.Http;
+using FileDownloadManager.UI.Downloads.Library;
 using FileDownloadManager.UI.Resources.Localization;
 
-namespace FileDownloadManager.UI;
+namespace FileDownloadManager.UI.Startup;
 
 public sealed partial class App : Application
 {

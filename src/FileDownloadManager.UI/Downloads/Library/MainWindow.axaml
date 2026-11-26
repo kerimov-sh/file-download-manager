@@ -1,6 +1,6 @@
 <Window xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:ui="using:FileDownloadManager.UI" xmlns:loc="using:FileDownloadManager.UI.Resources.Localization"
-        FontSize="12" x:Class="FileDownloadManager.UI.MainWindow" Title="{x:Static loc:Strings.Title}"
+        xmlns:ui="using:FileDownloadManager.UI.Downloads.Library" xmlns:loc="using:FileDownloadManager.UI.Resources.Localization"
+        FontSize="12" x:Class="FileDownloadManager.UI.Downloads.Library.MainWindow" Title="{x:Static loc:Strings.Title}"
         Width="1024" Height="620" MinWidth="710" MinHeight="500" WindowStartupLocation="CenterScreen">
   <Grid RowDefinitions="Auto,Auto,*,Auto">
     <Menu>

@@ -1,6 +1,6 @@
 using Avalonia;
 
-namespace FileDownloadManager.UI;
+namespace FileDownloadManager.UI.Startup;
 
 internal static class Program
 {

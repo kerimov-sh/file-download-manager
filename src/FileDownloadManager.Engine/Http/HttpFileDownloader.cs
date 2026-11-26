@@ -1,9 +1,9 @@
 using System.Net;
 using System.Diagnostics;
-using FileDownloadManager.DownloadContracts;
-using FileDownloadManager.TransferModel;
+using FileDownloadManager.DownloadContracts.Transfers;
+using FileDownloadManager.TransferModel.Transfers;
 
-namespace FileDownloadManager.Engine;
+namespace FileDownloadManager.Engine.Http;
 
 public sealed class HttpFileDownloader(HttpClient httpClient) : IFileDownloader
 {

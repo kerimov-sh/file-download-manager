@@ -1,10 +1,10 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
-using FileDownloadManager.TransferModel;
+using FileDownloadManager.TransferModel.Transfers;
 using FileDownloadManager.UI.Resources.Localization;
 
-namespace FileDownloadManager.UI;
+namespace FileDownloadManager.UI.Downloads.Add;
 
 public sealed partial class AddDownloadWindow : Window
 {

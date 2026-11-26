@@ -3,7 +3,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
 
-namespace FileDownloadManager.UI;
+namespace FileDownloadManager.UI.Appearance;
 
 internal static class WindowsIconTheme
 {

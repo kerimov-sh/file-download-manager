@@ -1,9 +1,9 @@
 using System.ComponentModel;
 using System.Globalization;
-using FileDownloadManager.TransferModel;
+using FileDownloadManager.TransferModel.Transfers;
 using FileDownloadManager.UI.Resources.Localization;
 
-namespace FileDownloadManager.UI;
+namespace FileDownloadManager.UI.Downloads.Library;
 
 public sealed class TransferMetrics : INotifyPropertyChanged
 {

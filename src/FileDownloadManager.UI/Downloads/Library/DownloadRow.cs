@@ -1,6 +1,6 @@
 using FileDownloadManager.UI.Resources.Localization;
 
-namespace FileDownloadManager.UI;
+namespace FileDownloadManager.UI.Downloads.Library;
 
 public sealed record DownloadRow(string Destination, Uri Source, string Description, LibraryFilter Category, string Status)
 {

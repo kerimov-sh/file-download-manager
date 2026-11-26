@@ -1,4 +1,4 @@
-namespace FileDownloadManager.UI;
+namespace FileDownloadManager.UI.Downloads.Library;
 
 public sealed record DownloadGridItem(string Title, DownloadRow? Download = null)
 {

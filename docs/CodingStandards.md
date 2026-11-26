@@ -17,6 +17,12 @@ Use .NET and Microsoft packages for application code. Avalonia and its required 
 
 Name each library for its role in the download manager. Keep its folder, project filename, and root namespace aligned.
 
+## Source folders
+
+- Group source files inside each project by feature or responsibility. For example, use `Downloads/Library` for the download list, `Downloads/Add` for the add dialog, and `Http` for HTTP transport code and its integration checks.
+- Keep source files out of project roots. Put entry points and application wiring in a startup or feature folder. Keep project metadata at the root and resources in their existing resource folders.
+- Start namespaces with the project name and append the folder segments. Keep each Avalonia view and its code-behind in the same folder and update XAML type references whenever the namespace moves.
+
 Host the engine and scheduler in the desktop process. Browser and command-line entry points should submit operations to the running application through a local boundary, with a single owner of queue and file state.
 
 Apply SOLID to concrete responsibilities. For example, changing a toolbar label should affect presentation resources, and changing a checkpoint format should affect persistence. Inject narrow contracts for boundaries such as clocks, storage, and transfer I/O when a use case needs them. Apply YAGNI by introducing abstractions, projects, and settings alongside their first actual use.

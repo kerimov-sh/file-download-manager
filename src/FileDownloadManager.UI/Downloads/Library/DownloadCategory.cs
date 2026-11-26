@@ -2,7 +2,7 @@ using Avalonia;
 using Avalonia.Media;
 using FileDownloadManager.UI.Resources.Localization;
 
-namespace FileDownloadManager.UI;
+namespace FileDownloadManager.UI.Downloads.Library;
 
 public sealed record DownloadCategory(string Name, LibraryFilter Filter, string IconKey = "IconFolder", string[]? Extensions = null)
 {

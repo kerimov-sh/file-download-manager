@@ -1,6 +1,6 @@
 <Window xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:loc="using:FileDownloadManager.UI.Resources.Localization"
-        x:Class="FileDownloadManager.UI.OptionsWindow" Title="{x:Static loc:Strings.Options}"
+        x:Class="FileDownloadManager.UI.Appearance.OptionsWindow" Title="{x:Static loc:Strings.Options}"
         Width="390" SizeToContent="Height" CanResize="False" ShowInTaskbar="False" WindowStartupLocation="CenterOwner">
   <StackPanel Margin="18" Spacing="12">
     <TextBlock Classes="section" Text="{x:Static loc:Strings.IconStyle}" />

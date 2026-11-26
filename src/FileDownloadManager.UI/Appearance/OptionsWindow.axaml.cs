@@ -1,7 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 
-namespace FileDownloadManager.UI;
+namespace FileDownloadManager.UI.Appearance;
 
 public sealed partial class OptionsWindow : Window
 {
