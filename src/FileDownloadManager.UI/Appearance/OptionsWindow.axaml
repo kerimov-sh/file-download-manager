@@ -35,13 +35,28 @@
       </TabItem>
       <TabItem Header="{x:Static loc:Strings.CategoriesSettings}">
         <Grid Margin="8" RowDefinitions="Auto,*" ColumnDefinitions="2*,3*" RowSpacing="8" ColumnSpacing="12">
-          <WrapPanel Grid.ColumnSpan="2" ItemSpacing="6" LineSpacing="6">
-            <Button Content="{x:Static loc:Strings.AddCategory}" Click="AddCategoryClicked" />
-            <Button x:Name="AddChildButton" Content="{x:Static loc:Strings.AddSubcategory}" Click="AddSubcategoryClicked" IsEnabled="False" />
-            <Button x:Name="RemoveCategoryButton" Content="{x:Static loc:Strings.RemoveCategory}" Click="RemoveCategoryClicked" IsEnabled="False" />
-            <Button x:Name="MoveUpButton" Content="{x:Static loc:Strings.MoveCategoryUp}" Click="MoveCategoryUpClicked" IsEnabled="False" />
-            <Button x:Name="MoveDownButton" Content="{x:Static loc:Strings.MoveCategoryDown}" Click="MoveCategoryDownClicked" IsEnabled="False" />
-          </WrapPanel>
+          <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" Spacing="4">
+            <Button Classes="categoryAction" Click="AddCategoryClicked"
+                    AutomationProperties.Name="{x:Static loc:Strings.AddCategory}" ToolTip.Tip="{x:Static loc:Strings.AddCategory}">
+              <PathIcon Classes="categoryActionIcon" Data="{StaticResource IconAddFolder}" />
+            </Button>
+            <Button Classes="categoryAction" x:Name="AddChildButton" IsEnabled="False" Click="AddSubcategoryClicked"
+                    AutomationProperties.Name="{x:Static loc:Strings.AddSubcategory}" ToolTip.Tip="{x:Static loc:Strings.AddSubcategory}">
+              <PathIcon Classes="categoryActionIcon" Data="{StaticResource IconAddSubfolder}" />
+            </Button>
+            <Button Classes="categoryAction" x:Name="RemoveCategoryButton" IsEnabled="False" Click="RemoveCategoryClicked"
+                    AutomationProperties.Name="{x:Static loc:Strings.RemoveCategory}" ToolTip.Tip="{x:Static loc:Strings.RemoveCategory}">
+              <PathIcon Classes="categoryActionIcon" Data="{StaticResource IconRemove}" />
+            </Button>
+            <Button Classes="categoryAction" x:Name="MoveUpButton" IsEnabled="False" Click="MoveCategoryUpClicked"
+                    AutomationProperties.Name="{x:Static loc:Strings.MoveCategoryUp}" ToolTip.Tip="{x:Static loc:Strings.MoveCategoryUp}">
+              <PathIcon Classes="categoryActionIcon" Data="{StaticResource IconMoveUp}" />
+            </Button>
+            <Button Classes="categoryAction" x:Name="MoveDownButton" IsEnabled="False" Click="MoveCategoryDownClicked"
+                    AutomationProperties.Name="{x:Static loc:Strings.MoveCategoryDown}" ToolTip.Tip="{x:Static loc:Strings.MoveCategoryDown}">
+              <PathIcon Classes="categoryActionIcon" Data="{StaticResource IconMoveDown}" />
+            </Button>
+          </StackPanel>
           <TreeView Grid.Row="1" x:Name="CategoryTree" SelectionChanged="CategorySelectionChanged"
                     AutomationProperties.Name="{x:Static loc:Strings.CategoriesSettings}">
             <TreeView.Styles>
