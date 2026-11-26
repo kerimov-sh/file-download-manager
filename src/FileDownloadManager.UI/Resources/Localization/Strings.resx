@@ -44,4 +44,8 @@
   <data name="Failed" xml:space="preserve"><value>Failed</value></data>
   <data name="Stopped" xml:space="preserve"><value>Cancelled</value></data>
   <data name="ByteSize" xml:space="preserve"><value>{0:N0} B</value></data>
+  <data name="View" xml:space="preserve"><value>View</value></data>
+  <data name="SystemIcons" xml:space="preserve"><value>Windows system icons</value></data>
+  <data name="BundledIcons" xml:space="preserve"><value>Bootstrap icons</value></data>
+  <data name="ShowDownloads" xml:space="preserve"><value>Show downloads</value></data>
 </root>

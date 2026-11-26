@@ -13,17 +13,21 @@
         <MenuItem x:Name="StopMenu" Header="{x:Static loc:Strings.StopTransfer}" Click="CancelClicked" IsEnabled="False" />
         <MenuItem x:Name="RemoveMenu" Header="{x:Static loc:Strings.RemoveEntry}" Click="RemoveClicked" IsEnabled="False" />
       </MenuItem>
+      <MenuItem Header="{x:Static loc:Strings.View}">
+        <MenuItem x:Name="SystemIcons" Header="{x:Static loc:Strings.SystemIcons}" ToggleType="Radio" GroupName="IconStyle" Click="SystemIconsClicked" />
+        <MenuItem x:Name="BundledIcons" Header="{x:Static loc:Strings.BundledIcons}" ToggleType="Radio" GroupName="IconStyle" Click="BundledIconsClicked" />
+      </MenuItem>
     </Menu>
     <Border Grid.Row="1" Classes="toolbar">
       <StackPanel Orientation="Horizontal" Spacing="5">
         <Button Classes="tool" x:Name="AddLinkButton" Click="AddClicked" AutomationProperties.Name="{x:Static loc:Strings.AddUrl}">
-          <StackPanel Spacing="4"><PathIcon Width="22" Height="22" Foreground="#3080C4" Data="{StaticResource IconAddLink}" /><TextBlock HorizontalAlignment="Center" Text="{x:Static loc:Strings.AddUrl}" /></StackPanel>
+          <StackPanel Orientation="Horizontal" Spacing="8"><PathIcon Width="16" Height="16" Data="{DynamicResource IconAddLink}" /><TextBlock HorizontalAlignment="Center" Text="{x:Static loc:Strings.AddUrl}" /></StackPanel>
         </Button>
         <Button Classes="tool" x:Name="StopButton" Click="CancelClicked" AutomationProperties.Name="{x:Static loc:Strings.StopTransfer}" IsEnabled="False">
-          <StackPanel Spacing="4"><PathIcon Width="22" Height="22" Foreground="#C65A4B" Data="{StaticResource IconStop}" /><TextBlock HorizontalAlignment="Center" Text="{x:Static loc:Strings.StopTransfer}" /></StackPanel>
+          <StackPanel Orientation="Horizontal" Spacing="8"><PathIcon Width="16" Height="16" Data="{DynamicResource IconStop}" /><TextBlock HorizontalAlignment="Center" Text="{x:Static loc:Strings.StopTransfer}" /></StackPanel>
         </Button>
         <Button Classes="tool" x:Name="RemoveButton" Click="RemoveClicked" AutomationProperties.Name="{x:Static loc:Strings.RemoveEntry}" IsEnabled="False">
-          <StackPanel Spacing="4"><PathIcon Width="22" Height="22" Foreground="#778698" Data="{StaticResource IconRemove}" /><TextBlock HorizontalAlignment="Center" Text="{x:Static loc:Strings.RemoveEntry}" /></StackPanel>
+          <StackPanel Orientation="Horizontal" Spacing="8"><PathIcon Width="16" Height="16" Data="{DynamicResource IconRemove}" /><TextBlock HorizontalAlignment="Center" Text="{x:Static loc:Strings.RemoveEntry}" /></StackPanel>
         </Button>
       </StackPanel>
     </Border>
@@ -32,10 +36,10 @@
         <DockPanel>
           <TextBlock DockPanel.Dock="Top" Classes="section" Margin="14,12" Text="{x:Static loc:Strings.Categories}" />
           <ListBox x:Name="Filters" SelectionChanged="FilterChanged">
-          <ListBoxItem Tag="{x:Static ui:LibraryFilter.All}" AutomationProperties.Name="{x:Static loc:Strings.AllDownloads}"><StackPanel Orientation="Horizontal" Spacing="9"><PathIcon Width="15" Height="15" Data="{StaticResource IconLibrary}" /><TextBlock Text="{x:Static loc:Strings.AllDownloads}" /></StackPanel></ListBoxItem>
-          <ListBoxItem Tag="{x:Static ui:LibraryFilter.Active}" AutomationProperties.Name="{x:Static loc:Strings.ActiveTransfers}"><StackPanel Orientation="Horizontal" Spacing="9"><PathIcon Width="15" Height="15" Data="{StaticResource IconActive}" /><TextBlock Text="{x:Static loc:Strings.ActiveTransfers}" /></StackPanel></ListBoxItem>
-          <ListBoxItem Tag="{x:Static ui:LibraryFilter.Finished}" AutomationProperties.Name="{x:Static loc:Strings.FinishedTransfers}"><StackPanel Orientation="Horizontal" Spacing="9"><PathIcon Width="15" Height="15" Data="{StaticResource IconFinished}" /><TextBlock Text="{x:Static loc:Strings.FinishedTransfers}" /></StackPanel></ListBoxItem>
-          <ListBoxItem Tag="{x:Static ui:LibraryFilter.Incomplete}" AutomationProperties.Name="{x:Static loc:Strings.IncompleteTransfers}"><StackPanel Orientation="Horizontal" Spacing="9"><PathIcon Width="15" Height="15" Data="{StaticResource IconIncomplete}" /><TextBlock Text="{x:Static loc:Strings.IncompleteTransfers}" /></StackPanel></ListBoxItem>
+          <ListBoxItem Tag="{x:Static ui:LibraryFilter.All}" AutomationProperties.Name="{x:Static loc:Strings.AllDownloads}"><StackPanel Orientation="Horizontal" Spacing="9"><PathIcon Width="15" Height="15" Data="{DynamicResource IconLibrary}" /><TextBlock Text="{x:Static loc:Strings.AllDownloads}" /></StackPanel></ListBoxItem>
+          <ListBoxItem Tag="{x:Static ui:LibraryFilter.Active}" AutomationProperties.Name="{x:Static loc:Strings.ActiveTransfers}"><StackPanel Orientation="Horizontal" Spacing="9"><PathIcon Width="15" Height="15" Data="{DynamicResource IconActive}" /><TextBlock Text="{x:Static loc:Strings.ActiveTransfers}" /></StackPanel></ListBoxItem>
+          <ListBoxItem Tag="{x:Static ui:LibraryFilter.Finished}" AutomationProperties.Name="{x:Static loc:Strings.FinishedTransfers}"><StackPanel Orientation="Horizontal" Spacing="9"><PathIcon Width="15" Height="15" Data="{DynamicResource IconFinished}" /><TextBlock Text="{x:Static loc:Strings.FinishedTransfers}" /></StackPanel></ListBoxItem>
+          <ListBoxItem Tag="{x:Static ui:LibraryFilter.Incomplete}" AutomationProperties.Name="{x:Static loc:Strings.IncompleteTransfers}"><StackPanel Orientation="Horizontal" Spacing="9"><PathIcon Width="15" Height="15" Data="{DynamicResource IconIncomplete}" /><TextBlock Text="{x:Static loc:Strings.IncompleteTransfers}" /></StackPanel></ListBoxItem>
           </ListBox>
         </DockPanel>
       </Border>
@@ -85,7 +89,7 @@
             </ListBox.ItemTemplate>
           </ListBox>
           <StackPanel x:Name="Empty" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="10" IsHitTestVisible="False" Opacity="0.68">
-            <PathIcon Width="32" Height="32" Data="{StaticResource IconFile}" />
+            <PathIcon Width="32" Height="32" Data="{DynamicResource IconFile}" />
             <TextBlock Text="{x:Static loc:Strings.NoEntries}" />
           </StackPanel>
         </Grid>

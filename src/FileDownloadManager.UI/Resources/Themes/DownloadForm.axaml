@@ -16,7 +16,13 @@
     <Setter Property="BorderThickness" Value="0,0,0,1" />
   </Style>
   <Style Selector="Border.toolbar"><Setter Property="Padding" Value="9,5" /></Style>
-  <Style Selector="Button.tool"><Setter Property="MinWidth" Value="72" /><Setter Property="HorizontalContentAlignment" Value="Center" /></Style>
+  <Style Selector="Button.tool">
+    <Setter Property="Padding" Value="10,6" />
+    <Setter Property="MinHeight" Value="32" />
+    <Setter Property="CornerRadius" Value="4" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+  </Style>
   <Style Selector="Border.sidebar">
     <Setter Property="BorderBrush" Value="{DynamicResource SystemControlForegroundBaseLowBrush}" />
     <Setter Property="BorderThickness" Value="0,0,1,0" />

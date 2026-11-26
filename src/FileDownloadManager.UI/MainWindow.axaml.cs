@@ -2,6 +2,7 @@ using System.Globalization;
 using System.Net.Http;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.Media;
 using Avalonia.Platform.Storage;
 using FileDownloadManager.DownloadContracts;
 using FileDownloadManager.TransferModel;
@@ -17,12 +18,36 @@ public sealed partial class MainWindow : Window
     private DownloadRow? _activeRow;
     private CancellationTokenSource? _transfer;
     private bool _exiting;
+    private readonly FontFamily? _systemIcons = WindowsIconTheme.FindInstalledFamily();
 
     public MainWindow()
     {
         InitializeComponent();
+        if (OperatingSystem.IsWindows())
+            FontFamily = new FontFamily("Segoe UI");
+        SystemIcons.IsEnabled = _systemIcons is not null;
+        SetIconTheme(_systemIcons);
         Filters.SelectedIndex = 0;
         Closed += (_, _) => _lifetime.Dispose();
+    }
+
+    private void SetIconTheme(FontFamily? family)
+    {
+        WindowsIconTheme.Apply(Resources, family);
+        SystemIcons.IsChecked = family is not null;
+        BundledIcons.IsChecked = family is null;
+    }
+
+    private void SystemIconsClicked(object? sender, RoutedEventArgs args) => SetIconTheme(_systemIcons);
+
+    private void BundledIconsClicked(object? sender, RoutedEventArgs args) => SetIconTheme(null);
+
+    internal void RestoreFromTray()
+    {
+        Show();
+        if (WindowState == WindowState.Minimized)
+            WindowState = WindowState.Normal;
+        Activate();
     }
 
     private void AddClicked(object? sender, RoutedEventArgs args)
@@ -170,7 +195,9 @@ public sealed partial class MainWindow : Window
 
     private void CancelClicked(object? sender, RoutedEventArgs args) => _transfer?.Cancel();
 
-    private void ExitClicked(object? sender, RoutedEventArgs args)
+    private void ExitClicked(object? sender, RoutedEventArgs args) => RequestExit();
+
+    internal void RequestExit()
     {
         _exiting = true;
         _lifetime.Cancel();
@@ -185,7 +212,12 @@ public sealed partial class MainWindow : Window
         if (!_exiting && args.CloseReason == WindowCloseReason.WindowClosing)
         {
             args.Cancel = true;
-            WindowState = WindowState.Minimized;
+            // Linux shells can accept a tray registration without displaying a tray host.
+            // Keep a taskbar entry there so the window is always reachable.
+            if (OperatingSystem.IsWindows() || OperatingSystem.IsMacOS())
+                Hide();
+            else
+                WindowState = WindowState.Minimized;
         }
     }
 }
