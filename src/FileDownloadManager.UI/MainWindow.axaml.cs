@@ -18,6 +18,10 @@ public sealed partial class MainWindow : Window
     private CancellationTokenSource? _transfer;
     private bool _exiting;
     private Window? _dialog;
+    private DownloadColumn? _sortColumn;
+    private Button? _sortHeader;
+    private object? _sortHeaderLabel;
+    private bool _sortDescending;
     private readonly FontFamily? _systemIcons = WindowsIconTheme.FindInstalledFamily();
 
     public MainWindow()
@@ -35,6 +39,7 @@ public sealed partial class MainWindow : Window
             new DownloadCategory(Strings.ActiveTransfers, LibraryFilter.Active)
         };
         Filters.SelectedItem = Filters.Items[0];
+        Grouping.SelectedIndex = 0;
         Closed += (_, _) => _lifetime.Dispose();
     }
 
@@ -64,7 +69,7 @@ public sealed partial class MainWindow : Window
 
         var result = await ShowOwnedDialogAsync<DownloadDialogResult?>(new AddDownloadWindow());
         if (result is not null && !_exiting)
-            await StartTransferAsync(result.Request, result.Description, _lifetime.Token);
+            await StartTransferAsync(result.Request, result.Description, null, _lifetime.Token);
     }
 
     private async Task<TResult> ShowOwnedDialogAsync<TResult>(Window dialog)
@@ -85,22 +90,80 @@ public sealed partial class MainWindow : Window
 
     private void FilterChanged(object? sender, SelectionChangedEventArgs args) => RefreshRows();
 
+    private void GroupingChanged(object? sender, SelectionChangedEventArgs args) => RefreshRows();
+
+    private DownloadRow? SelectedDownload => (Rows.SelectedItem as DownloadGridItem)?.Download;
+
+    private void SortClicked(object? sender, RoutedEventArgs args)
+    {
+        if (sender is not Button { Tag: DownloadColumn column } header)
+            return;
+
+        if (_sortHeader is not null)
+            _sortHeader.Content = _sortHeaderLabel;
+
+        _sortDescending = _sortColumn == column && !_sortDescending;
+        _sortColumn = column;
+        _sortHeader = header;
+        _sortHeaderLabel = header.Content;
+        header.Content = string.Format(CultureInfo.CurrentCulture,
+            _sortDescending ? Strings.SortDescending : Strings.SortAscending, _sortHeaderLabel);
+        RefreshRows();
+    }
+
     private void RefreshRows(DownloadRow? select = null)
     {
         var filter = Filters.SelectedItem as DownloadCategory;
         var visible = _library.Where(row => filter?.Matches(row) ?? true).ToList();
-        select ??= Rows.SelectedItem as DownloadRow;
-        Rows.ItemsSource = visible;
-        Rows.SelectedItem = select is not null && visible.Contains(select) ? select : null;
+        select ??= SelectedDownload;
+        IEnumerable<DownloadRow> sorted = visible;
+        if (_sortColumn is DownloadColumn column)
+        {
+            sorted = _sortDescending
+                ? visible.OrderByDescending(row => SortKey(row, column))
+                : visible.OrderBy(row => SortKey(row, column));
+        }
+
+        var grouping = (Grouping.SelectedItem as ComboBoxItem)?.Tag as DownloadGrouping? ?? DownloadGrouping.None;
+        var items = grouping == DownloadGrouping.None
+            ? sorted.Select(ToGridItem).ToList()
+            : sorted.GroupBy(row => GroupKey(row, grouping)).SelectMany(group =>
+                group.Select(ToGridItem).Prepend(new DownloadGridItem(group.Key))).ToList();
+        Rows.ItemsSource = items;
+        Rows.SelectedItem = select is null ? null : items.FirstOrDefault(item => item.Download?.Id == select.Id);
         Count.Text = string.Format(CultureInfo.CurrentCulture, Strings.LibraryCount, visible.Count);
         UpdateActions();
     }
+
+    private static DownloadGridItem ToGridItem(DownloadRow row) => new(row.FileName, row);
+
+    private static IComparable? SortKey(DownloadRow row, DownloadColumn column) => column switch
+    {
+        DownloadColumn.FileName => row.FileName,
+        DownloadColumn.FileType => row.FileType,
+        DownloadColumn.Size => row.CompletedBytes ?? row.Metrics?.TotalBytes,
+        DownloadColumn.Status => row.GroupStatus,
+        DownloadColumn.TimeLeft => row.Metrics?.Remaining,
+        DownloadColumn.Rate => row.Metrics?.BytesPerSecond,
+        DownloadColumn.AddedDate => row.AddedDate,
+        DownloadColumn.LastTry => row.LastTry,
+        DownloadColumn.Description => row.Description,
+        _ => throw new ArgumentOutOfRangeException(nameof(column))
+    };
+
+    private static string GroupKey(DownloadRow row, DownloadGrouping grouping) => grouping switch
+    {
+        DownloadGrouping.FileType => row.FileType,
+        DownloadGrouping.Status => row.GroupStatus,
+        DownloadGrouping.AddedDate => row.AddedDate.ToString("d", CultureInfo.CurrentCulture),
+        _ => throw new ArgumentOutOfRangeException(nameof(grouping))
+    };
 
     private void RowChanged(object? sender, SelectionChangedEventArgs args) => UpdateActions();
 
     private void UpdateActions()
     {
-        var selected = Rows.SelectedItem as DownloadRow;
+        var selected = SelectedDownload;
         var active = selected is not null && ReferenceEquals(selected, _activeRow);
         StopButton.IsEnabled = StopMenu.IsEnabled = active;
         StopAllButton.IsEnabled = _activeRow is not null;
@@ -117,7 +180,7 @@ public sealed partial class MainWindow : Window
 
     private async void RetryClicked(object? sender, RoutedEventArgs args)
     {
-        if (Rows.SelectedItem is not DownloadRow { Category: LibraryFilter.Incomplete } row ||
+        if (SelectedDownload is not { Category: LibraryFilter.Incomplete } row ||
             _transfer is not null || _exiting)
             return;
 
@@ -127,7 +190,7 @@ public sealed partial class MainWindow : Window
             return;
         }
 
-        await StartTransferAsync(new DownloadRequest(row.Source, row.Destination), row.Description, _lifetime.Token);
+        await StartTransferAsync(new DownloadRequest(row.Source, row.Destination), row.Description, row, _lifetime.Token);
     }
 
     private async void OptionsClicked(object? sender, RoutedEventArgs args)
@@ -145,23 +208,27 @@ public sealed partial class MainWindow : Window
 
     private void RemoveClicked(object? sender, RoutedEventArgs args)
     {
-        if (Rows.SelectedItem is DownloadRow row && !ReferenceEquals(row, _activeRow))
+        if (SelectedDownload is { } row && !ReferenceEquals(row, _activeRow))
         {
             _library.Remove(row);
             RefreshRows();
         }
     }
 
-    private async Task StartTransferAsync(DownloadRequest request, string description, CancellationToken cancellationToken)
+    private async Task StartTransferAsync(DownloadRequest request, string description, DownloadRow? previous,
+        CancellationToken cancellationToken)
     {
         var path = request.DestinationPath;
         using var transfer = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
         _transfer = transfer;
         var metrics = new TransferMetrics();
-        var row = new DownloadRow(path, request.Source, description, LibraryFilter.Active,
-            Strings.Downloading, string.Empty) { Metrics = metrics };
+        var row = (previous ?? new DownloadRow(path, request.Source, description, LibraryFilter.Active, Strings.Downloading))
+            with { Category = LibraryFilter.Active, Status = Strings.Downloading, LastTry = DateTime.Now, Metrics = metrics };
         _activeRow = row;
-        _library.Insert(0, row);
+        if (previous is null)
+            _library.Insert(0, row);
+        else
+            _library[_library.IndexOf(previous)] = row;
         Filters.SelectedItem = Filters.Items[0];
         RefreshRows(row);
         SetDownloading(true);
@@ -173,7 +240,7 @@ public sealed partial class MainWindow : Window
                 new Progress<TransferProgress>(metrics.Update), transfer.Token);
             Status.Text = Strings.Completed;
             result = result with { Category = LibraryFilter.Finished, Status = Strings.FinishedTransfers,
-                Size = TransferMetrics.FormatSize(new FileInfo(path).Length) };
+                CompletedBytes = new FileInfo(path).Length };
         }
         catch (OperationCanceledException) when (transfer.IsCancellationRequested)
         {
@@ -188,7 +255,7 @@ public sealed partial class MainWindow : Window
         finally
         {
             _library[_library.IndexOf(row)] = result;
-            var selected = ReferenceEquals(Rows.SelectedItem, row) ? result : Rows.SelectedItem as DownloadRow;
+            var selected = ReferenceEquals(SelectedDownload, row) ? result : SelectedDownload;
             _activeRow = null;
             _transfer = null;
             SetDownloading(false);

@@ -28,7 +28,7 @@
     <Setter Property="MinHeight" Value="38" />
     <Setter Property="CornerRadius" Value="6" />
   </Style>
-  <Style Selector="Border.toolbar, Border.columnHeader">
+  <Style Selector="Border.toolbar, Border.groupBar">
     <Setter Property="BorderBrush" Value="{DynamicResource GridRule}" />
     <Setter Property="BorderThickness" Value="0,0,0,1" />
   </Style>
@@ -48,11 +48,26 @@
   <Style Selector="Border.toolbar, Border.sidebar, Border.footer">
     <Setter Property="Background" Value="{DynamicResource PanelSurface}" />
   </Style>
-  <Style Selector="Border.columnHeader"><Setter Property="Background" Value="{DynamicResource HeaderSurface}" /></Style>
-  <Style Selector="Border.cell">
+  <Style Selector="Border.groupBar">
+    <Setter Property="Padding" Value="8,4" />
+    <Setter Property="Background" Value="{DynamicResource PanelSurface}" />
+  </Style>
+  <Style Selector="TableViewColumnHeader">
+    <Setter Property="Background" Value="{DynamicResource HeaderSurface}" />
+  </Style>
+  <Style Selector="Button.columnSort">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Padding" Value="4,3" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+  </Style>
+  <Style Selector="TableViewCell">
     <Setter Property="Padding" Value="4,2" />
     <Setter Property="BorderThickness" Value="0,0,1,1" />
     <Setter Property="BorderBrush" Value="{DynamicResource GridRule}" />
+  </Style>
+  <Style Selector="TextBlock.groupTitle">
+    <Setter Property="FontWeight" Value="SemiBold" />
   </Style>
   <Style Selector="Border.footer">
     <Setter Property="Padding" Value="12,6" />

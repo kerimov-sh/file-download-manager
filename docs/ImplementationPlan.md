@@ -31,6 +31,8 @@ Windows desktop automation verified category selection, live percentage on a loc
 
 The desktop defaults to a dark palette with subdued grid lines. Empty categories leave the grid unobstructed and show a zero count in the status bar. Windows desktop automation verified the empty view and a subsequent download.
 
+Drag column dividers to resize and click a header to sort. **File type** uses the filename extension. **Date added** records when the entry first entered the list, and retry updates **Last try** on the same entry. **Group by** groups the current category by file type, status, or date added. Windows desktop automation checked resizing, both sort directions, and file-type grouping.
+
 | Step | Deliverable | Acceptance check |
 |---|---|---|
 | 0. Foundation | Confirm repository state, scaffold the solution and the first required projects, establish build and test entry points. | Build a clean checkout and verify project names and reference direction against the [coding standards](CodingStandards.md). |

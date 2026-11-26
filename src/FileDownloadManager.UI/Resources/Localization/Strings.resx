@@ -67,4 +67,11 @@
   <data name="CancelDialog" xml:space="preserve"><value>Cancel</value></data>
   <data name="Confirm" xml:space="preserve"><value>OK</value></data>
   <data name="IconStyle" xml:space="preserve"><value>Toolbar and download icons</value></data>
+  <data name="FileType" xml:space="preserve"><value>File type</value></data>
+  <data name="AddedDate" xml:space="preserve"><value>Date added</value></data>
+  <data name="GroupBy" xml:space="preserve"><value>Group by</value></data>
+  <data name="NoGrouping" xml:space="preserve"><value>None</value></data>
+  <data name="NoExtension" xml:space="preserve"><value>No extension</value></data>
+  <data name="SortAscending" xml:space="preserve"><value>{0} ▲</value></data>
+  <data name="SortDescending" xml:space="preserve"><value>{0} ▼</value></data>
 </root>
