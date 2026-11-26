@@ -10,7 +10,7 @@ Read the [coding standards](docs/CodingStandards.md) before writing code. Use th
 
 ## Branch workflow
 
-1. Start each feature, bug fix, hotfix, or other substantive change on its own descriptively named branch from an up-to-date `main`. Simple documentation and configuration updates may share the active feature, bug-fix, or hotfix branch.
+1. Start each feature, bug fix, hotfix, or other substantive change on its own descriptively named branch from an up-to-date `main`. Keep the UI, backend, and tests for the same feature together on that branch through review and merge. Simple documentation and configuration updates may share the active feature, bug-fix, or hotfix branch.
 2. Commit the change on its branch. Run the build, applicable tests, and checks for the affected behavior. Resolve failures and repeat the checks until they pass.
 3. Merge the verified change into `main`. If `main` has advanced, integrate it into the change branch and verify the combined result before merging.
 4. Push the merged `main` and confirm it contains the change. Then delete the merged branch locally and, if it was published, on the remote.
