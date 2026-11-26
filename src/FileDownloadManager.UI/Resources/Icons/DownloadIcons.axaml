@@ -8,4 +8,6 @@
   <StreamGeometry x:Key="IconFinished">M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16 m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05</StreamGeometry>
   <StreamGeometry x:Key="IconIncomplete">M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16 M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z</StreamGeometry>
   <StreamGeometry x:Key="IconFile">M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293z M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z</StreamGeometry>
+  <!-- Three adjustment sliders for the appearance options command. -->
+  <StreamGeometry x:Key="IconSettings">M1,3 H5 V2 H7 V3 H15 V5 H7 V6 H5 V5 H1 Z M1,8 H10 V7 H12 V8 H15 V10 H12 V11 H10 V10 H1 Z M1,13 H4 V12 H6 V13 H15 V15 H6 V16 H4 V15 H1 Z</StreamGeometry>
 </ResourceDictionary>

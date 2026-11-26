@@ -22,7 +22,8 @@ internal static class WindowsIconTheme
         ["IconActive"] = '\uE896',
         ["IconFinished"] = '\uE73E',
         ["IconIncomplete"] = '\uE7BA',
-        ["IconFile"] = '\uE7C3'
+        ["IconFile"] = '\uE7C3',
+        ["IconSettings"] = '\uE713'
     };
 
     public static FontFamily? FindInstalledFamily()

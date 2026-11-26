@@ -1,6 +1,6 @@
 <Window xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:ui="using:FileDownloadManager.UI" xmlns:loc="using:FileDownloadManager.UI.Resources.Localization"
-        x:Class="FileDownloadManager.UI.MainWindow" Title="{x:Static loc:Strings.Title}"
+        FontSize="12" x:Class="FileDownloadManager.UI.MainWindow" Title="{x:Static loc:Strings.Title}"
         Width="960" Height="620" MinWidth="710" MinHeight="500" WindowStartupLocation="CenterScreen">
   <Grid RowDefinitions="Auto,Auto,*,Auto">
     <Menu>
@@ -13,46 +13,93 @@
         <MenuItem x:Name="StopMenu" Header="{x:Static loc:Strings.StopTransfer}" Click="CancelClicked" IsEnabled="False" />
         <MenuItem x:Name="RemoveMenu" Header="{x:Static loc:Strings.RemoveEntry}" Click="RemoveClicked" IsEnabled="False" />
       </MenuItem>
-      <MenuItem Header="{x:Static loc:Strings.View}">
+      <MenuItem x:Name="ViewMenu" Header="{x:Static loc:Strings.View}">
         <MenuItem x:Name="SystemIcons" Header="{x:Static loc:Strings.SystemIcons}" ToggleType="Radio" GroupName="IconStyle" Click="SystemIconsClicked" />
         <MenuItem x:Name="BundledIcons" Header="{x:Static loc:Strings.BundledIcons}" ToggleType="Radio" GroupName="IconStyle" Click="BundledIconsClicked" />
       </MenuItem>
     </Menu>
     <Border Grid.Row="1" Classes="toolbar">
-      <StackPanel Orientation="Horizontal" Spacing="5">
+      <StackPanel Orientation="Horizontal" Spacing="2">
         <Button Classes="tool" x:Name="AddLinkButton" Click="AddClicked" AutomationProperties.Name="{x:Static loc:Strings.AddUrl}">
-          <StackPanel Orientation="Horizontal" Spacing="8"><PathIcon Width="16" Height="16" Data="{DynamicResource IconAddLink}" /><TextBlock HorizontalAlignment="Center" Text="{x:Static loc:Strings.AddUrl}" /></StackPanel>
+          <StackPanel Spacing="4">
+            <PathIcon Width="28" Height="28" Foreground="#269581" Data="{DynamicResource IconAddLink}" />
+            <TextBlock HorizontalAlignment="Center" Text="{x:Static loc:Strings.AddUrl}" />
+          </StackPanel>
+        </Button>
+        <Button Classes="tool" x:Name="RetryButton" Click="RetryClicked" AutomationProperties.Name="{x:Static loc:Strings.Retry}" IsEnabled="False">
+          <StackPanel Spacing="4">
+            <PathIcon Width="28" Height="28" Foreground="#2679aa" Data="{DynamicResource IconActive}" />
+            <TextBlock HorizontalAlignment="Center" Text="{x:Static loc:Strings.Retry}" />
+          </StackPanel>
         </Button>
         <Button Classes="tool" x:Name="StopButton" Click="CancelClicked" AutomationProperties.Name="{x:Static loc:Strings.StopTransfer}" IsEnabled="False">
-          <StackPanel Orientation="Horizontal" Spacing="8"><PathIcon Width="16" Height="16" Data="{DynamicResource IconStop}" /><TextBlock HorizontalAlignment="Center" Text="{x:Static loc:Strings.StopTransfer}" /></StackPanel>
+          <StackPanel Spacing="4">
+            <PathIcon Width="28" Height="28" Foreground="#ac634e" Data="{DynamicResource IconStop}" />
+            <TextBlock HorizontalAlignment="Center" Text="{x:Static loc:Strings.StopTransfer}" />
+          </StackPanel>
+        </Button>
+        <Button Classes="tool" x:Name="StopAllButton" Click="CancelClicked" AutomationProperties.Name="{x:Static loc:Strings.StopAll}" IsEnabled="False">
+          <StackPanel Spacing="4">
+            <PathIcon Width="28" Height="28" Foreground="#aa6543" Data="{DynamicResource IconIncomplete}" />
+            <TextBlock HorizontalAlignment="Center" Text="{x:Static loc:Strings.StopAll}" />
+          </StackPanel>
         </Button>
         <Button Classes="tool" x:Name="RemoveButton" Click="RemoveClicked" AutomationProperties.Name="{x:Static loc:Strings.RemoveEntry}" IsEnabled="False">
-          <StackPanel Orientation="Horizontal" Spacing="8"><PathIcon Width="16" Height="16" Data="{DynamicResource IconRemove}" /><TextBlock HorizontalAlignment="Center" Text="{x:Static loc:Strings.RemoveEntry}" /></StackPanel>
+          <StackPanel Spacing="4">
+            <PathIcon Width="28" Height="28" Foreground="#9a6288" Data="{DynamicResource IconRemove}" />
+            <TextBlock HorizontalAlignment="Center" Text="{x:Static loc:Strings.RemoveEntry}" />
+          </StackPanel>
+        </Button>
+        <Button Classes="tool" x:Name="ClearButton" Click="ClearFinishedClicked" AutomationProperties.Name="{x:Static loc:Strings.ClearFinished}" IsEnabled="False">
+          <StackPanel Spacing="4">
+            <PathIcon Width="28" Height="28" Foreground="#965386" Data="{DynamicResource IconFinished}" />
+            <TextBlock HorizontalAlignment="Center" Text="{x:Static loc:Strings.ClearFinished}" />
+          </StackPanel>
+        </Button>
+        <Button Classes="tool" x:Name="OptionsButton" Click="OptionsClicked" AutomationProperties.Name="{x:Static loc:Strings.Options}">
+          <StackPanel Spacing="4">
+            <PathIcon Width="28" Height="28" Foreground="#7065b4" Data="{DynamicResource IconSettings}" />
+            <TextBlock HorizontalAlignment="Center" Text="{x:Static loc:Strings.Options}" />
+          </StackPanel>
         </Button>
       </StackPanel>
     </Border>
-    <Grid Grid.Row="2" ColumnDefinitions="175,*">
+    <Grid Grid.Row="2" ColumnDefinitions="168,*">
       <Border Classes="sidebar">
         <DockPanel>
-          <TextBlock DockPanel.Dock="Top" Classes="section" Margin="14,12" Text="{x:Static loc:Strings.Categories}" />
-          <ListBox x:Name="Filters" SelectionChanged="FilterChanged">
-          <ListBoxItem Tag="{x:Static ui:LibraryFilter.All}" AutomationProperties.Name="{x:Static loc:Strings.AllDownloads}"><StackPanel Orientation="Horizontal" Spacing="9"><PathIcon Width="15" Height="15" Data="{DynamicResource IconLibrary}" /><TextBlock Text="{x:Static loc:Strings.AllDownloads}" /></StackPanel></ListBoxItem>
-          <ListBoxItem Tag="{x:Static ui:LibraryFilter.Active}" AutomationProperties.Name="{x:Static loc:Strings.ActiveTransfers}"><StackPanel Orientation="Horizontal" Spacing="9"><PathIcon Width="15" Height="15" Data="{DynamicResource IconActive}" /><TextBlock Text="{x:Static loc:Strings.ActiveTransfers}" /></StackPanel></ListBoxItem>
-          <ListBoxItem Tag="{x:Static ui:LibraryFilter.Finished}" AutomationProperties.Name="{x:Static loc:Strings.FinishedTransfers}"><StackPanel Orientation="Horizontal" Spacing="9"><PathIcon Width="15" Height="15" Data="{DynamicResource IconFinished}" /><TextBlock Text="{x:Static loc:Strings.FinishedTransfers}" /></StackPanel></ListBoxItem>
-          <ListBoxItem Tag="{x:Static ui:LibraryFilter.Incomplete}" AutomationProperties.Name="{x:Static loc:Strings.IncompleteTransfers}"><StackPanel Orientation="Horizontal" Spacing="9"><PathIcon Width="15" Height="15" Data="{DynamicResource IconIncomplete}" /><TextBlock Text="{x:Static loc:Strings.IncompleteTransfers}" /></StackPanel></ListBoxItem>
-          </ListBox>
+          <TextBlock DockPanel.Dock="Top" Classes="section" Margin="6,4" Text="{x:Static loc:Strings.Categories}" />
+          <TreeView x:Name="Filters" SelectionChanged="FilterChanged">
+            <TreeView.Styles>
+              <Style Selector="TreeViewItem">
+                <Setter Property="AutomationProperties.Name" Value="{ReflectionBinding Name}" />
+                <Setter Property="IsExpanded" Value="True" />
+                <Setter Property="MinHeight" Value="21" />
+                <Setter Property="Padding" Value="0" />
+              </Style>
+            </TreeView.Styles>
+            <TreeView.ItemTemplate>
+              <TreeDataTemplate x:DataType="ui:DownloadCategory" ItemsSource="{Binding Children}">
+                <StackPanel Orientation="Horizontal" Spacing="5">
+                  <PathIcon Width="13" Height="13" Foreground="#BF9631" Data="{DynamicResource IconLibrary}" />
+                  <TextBlock Text="{Binding Name}" />
+                </StackPanel>
+              </TreeDataTemplate>
+            </TreeView.ItemTemplate>
+          </TreeView>
         </DockPanel>
       </Border>
       <Grid Grid.Column="1" RowDefinitions="Auto,*">
         <Border x:Name="Editor" IsVisible="False" Classes="editor">
           <StackPanel Spacing="8" x:Name="Fields">
             <TextBlock Classes="section" Text="{x:Static loc:Strings.Heading}" />
-            <Grid ColumnDefinitions="100,*,Auto" RowDefinitions="Auto,Auto" RowSpacing="6" ColumnSpacing="8">
+            <Grid ColumnDefinitions="100,*,Auto" RowDefinitions="Auto,Auto,Auto" RowSpacing="6" ColumnSpacing="8">
               <TextBlock VerticalAlignment="Center" Text="{x:Static loc:Strings.Url}" />
               <TextBox Grid.Column="1" Grid.ColumnSpan="2" x:Name="SourceUrl" AutomationProperties.Name="{x:Static loc:Strings.Url}" PlaceholderText="{x:Static loc:Strings.UrlHint}" />
               <TextBlock Grid.Row="1" VerticalAlignment="Center" Text="{x:Static loc:Strings.Destination}" />
               <TextBox Grid.Row="1" Grid.Column="1" x:Name="Destination" AutomationProperties.Name="{x:Static loc:Strings.Destination}" PlaceholderText="{x:Static loc:Strings.DestinationHint}" />
               <Button Grid.Row="1" Grid.Column="2" Content="{x:Static loc:Strings.Browse}" Click="BrowseClicked" />
+              <TextBlock Grid.Row="2" VerticalAlignment="Center" Text="{x:Static loc:Strings.Description}" />
+              <TextBox x:Name="Notes" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" AutomationProperties.Name="{x:Static loc:Strings.Description}" />
             </Grid>
             <StackPanel Orientation="Horizontal" Spacing="8">
               <Button x:Name="Start" Classes="accent" Content="{x:Static loc:Strings.Start}" Click="StartClicked" />
@@ -62,28 +109,54 @@
         </Border>
         <Grid Grid.Row="1" RowDefinitions="Auto,*">
           <Border Classes="columnHeader">
-            <Grid ColumnDefinitions="2*,90,120,*" ColumnSpacing="8">
-              <TextBlock Grid.Column="0" Text="{x:Static loc:Strings.FileName}" />
-              <TextBlock Grid.Column="1" Text="{x:Static loc:Strings.FileSize}" />
-              <TextBlock Grid.Column="2" Text="{x:Static loc:Strings.TransferStatus}" />
-              <TextBlock Grid.Column="3" Text="{x:Static loc:Strings.Source}" />
+            <Grid ColumnDefinitions="2.3*,1*,1.1*,1*,1.2*,1.3*,1.5*">
+              <Border Classes="cell" Grid.Column="0"><TextBlock Text="{x:Static loc:Strings.FileName}" TextTrimming="CharacterEllipsis" /></Border>
+              <Border Classes="cell" Grid.Column="1"><TextBlock Text="{x:Static loc:Strings.FileSize}" TextTrimming="CharacterEllipsis" /></Border>
+              <Border Classes="cell" Grid.Column="2"><TextBlock Text="{x:Static loc:Strings.TransferStatus}" TextTrimming="CharacterEllipsis" /></Border>
+              <Border Classes="cell" Grid.Column="3"><TextBlock Text="{x:Static loc:Strings.TimeLeft}" TextTrimming="CharacterEllipsis" /></Border>
+              <Border Classes="cell" Grid.Column="4"><TextBlock Text="{x:Static loc:Strings.Rate}" TextTrimming="CharacterEllipsis" /></Border>
+              <Border Classes="cell" Grid.Column="5"><TextBlock Text="{x:Static loc:Strings.LastTry}" TextTrimming="CharacterEllipsis" /></Border>
+              <Border Classes="cell" Grid.Column="6"><TextBlock Text="{x:Static loc:Strings.Description}" TextTrimming="CharacterEllipsis" /></Border>
             </Grid>
           </Border>
-          <ListBox Grid.Row="1" x:Name="Rows" SelectionChanged="RowChanged">
+          <Grid Grid.Row="1" ColumnDefinitions="2.3*,1*,1.1*,1*,1.2*,1.3*,1.5*" IsHitTestVisible="False">
+            <Grid.Background>
+              <DrawingBrush TileMode="Tile" DestinationRect="0,0,8,21" SourceRect="0,0,8,21" Stretch="Fill">
+                <DrawingBrush.Drawing>
+                  <DrawingGroup>
+                    <GeometryDrawing Geometry="M0,0 H8 V21 H0 Z" Brush="Transparent" />
+                    <GeometryDrawing Geometry="M0,20 H8 V21 H0 Z" Brush="{DynamicResource SystemControlForegroundBaseLowBrush}" />
+                  </DrawingGroup>
+                </DrawingBrush.Drawing>
+              </DrawingBrush>
+            </Grid.Background>
+            <Border Grid.Column="0" BorderThickness="0,0,1,0" BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}" />
+            <Border Grid.Column="1" BorderThickness="0,0,1,0" BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}" />
+            <Border Grid.Column="2" BorderThickness="0,0,1,0" BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}" />
+            <Border Grid.Column="3" BorderThickness="0,0,1,0" BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}" />
+            <Border Grid.Column="4" BorderThickness="0,0,1,0" BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}" />
+            <Border Grid.Column="5" BorderThickness="0,0,1,0" BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}" />
+            <Border Grid.Column="6" BorderThickness="0,0,1,0" BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}" />
+          </Grid>
+          <ListBox Background="Transparent" Grid.Row="1" x:Name="Rows" SelectionChanged="RowChanged">
             <ListBox.Styles>
               <Style Selector="ListBoxItem">
                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                <Setter Property="Padding" Value="12,7" />
+                <Setter Property="Padding" Value="0" />
                 <Setter Property="Margin" Value="0" />
+                <Setter Property="MinHeight" Value="21" />
               </Style>
             </ListBox.Styles>
             <ListBox.ItemTemplate>
               <DataTemplate x:DataType="ui:DownloadRow">
-                <Grid ColumnDefinitions="2*,90,120,*" ColumnSpacing="8">
-                  <TextBlock Text="{Binding FileName}" TextTrimming="CharacterEllipsis" ToolTip.Tip="{Binding Destination}" />
-                  <TextBlock Grid.Column="1" Text="{Binding Size}" />
-                  <TextBlock Grid.Column="2" Text="{Binding Status}" />
-                  <TextBlock Grid.Column="3" Text="{Binding Host}" TextTrimming="CharacterEllipsis" />
+                <Grid ColumnDefinitions="2.3*,1*,1.1*,1*,1.2*,1.3*,1.5*">
+                  <Border Classes="cell" Grid.Column="0"><Grid ColumnDefinitions="14,*" ColumnSpacing="3" ToolTip.Tip="{Binding Destination}"><PathIcon Width="12" Height="12" Data="{DynamicResource IconFile}" /><TextBlock Grid.Column="1" Text="{Binding FileName}" TextTrimming="CharacterEllipsis" /></Grid></Border>
+                  <Border Classes="cell" Grid.Column="1"><Panel><TextBlock Text="{Binding Size}" IsVisible="{Binding !IsActive}" /><TextBlock Text="{Binding Metrics.Size}" IsVisible="{Binding IsActive}" /></Panel></Border>
+                  <Border Classes="cell" Grid.Column="2"><Panel><TextBlock Text="{Binding Status}" IsVisible="{Binding !IsActive}" /><TextBlock Text="{Binding Metrics.Status}" IsVisible="{Binding IsActive}" /></Panel></Border>
+                  <Border Classes="cell" Grid.Column="3"><TextBlock Text="{Binding Metrics.TimeLeft}" TextTrimming="CharacterEllipsis" /></Border>
+                  <Border Classes="cell" Grid.Column="4"><TextBlock Text="{Binding Metrics.Rate}" TextTrimming="CharacterEllipsis" /></Border>
+                  <Border Classes="cell" Grid.Column="5"><TextBlock Text="{Binding LastTry, StringFormat='{}{0:g}'}" TextTrimming="CharacterEllipsis" /></Border>
+                  <Border Classes="cell" Grid.Column="6"><TextBlock Text="{Binding Description}" TextTrimming="CharacterEllipsis" /></Border>
                 </Grid>
               </DataTemplate>
             </ListBox.ItemTemplate>

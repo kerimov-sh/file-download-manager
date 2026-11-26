@@ -48,4 +48,21 @@
   <data name="SystemIcons" xml:space="preserve"><value>Windows system icons</value></data>
   <data name="BundledIcons" xml:space="preserve"><value>Bootstrap icons</value></data>
   <data name="ShowDownloads" xml:space="preserve"><value>Show downloads</value></data>
+  <data name="Compressed" xml:space="preserve"><value>Compressed</value></data>
+  <data name="Documents" xml:space="preserve"><value>Documents</value></data>
+  <data name="Music" xml:space="preserve"><value>Music</value></data>
+  <data name="Programs" xml:space="preserve"><value>Programs</value></data>
+  <data name="Video" xml:space="preserve"><value>Video</value></data>
+  <data name="Retry" xml:space="preserve"><value>Retry</value></data>
+  <data name="StopAll" xml:space="preserve"><value>Stop all</value></data>
+  <data name="ClearFinished" xml:space="preserve"><value>Clear finished</value></data>
+  <data name="Options" xml:space="preserve"><value>Options</value></data>
+  <data name="Description" xml:space="preserve"><value>Description</value></data>
+  <data name="TimeLeft" xml:space="preserve"><value>Time left</value></data>
+  <data name="Rate" xml:space="preserve"><value>Transfer rate</value></data>
+  <data name="LastTry" xml:space="preserve"><value>Last try</value></data>
+  <data name="PerSecond" xml:space="preserve"><value>{0}/s</value></data>
+  <data name="Kilobytes" xml:space="preserve"><value>{0:N1} KB</value></data>
+  <data name="Megabytes" xml:space="preserve"><value>{0:N1} MB</value></data>
+  <data name="Gigabytes" xml:space="preserve"><value>{0:N2} GB</value></data>
 </root>

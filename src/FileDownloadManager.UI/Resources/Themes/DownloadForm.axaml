@@ -28,7 +28,12 @@
     <Setter Property="BorderThickness" Value="0,0,1,0" />
   </Style>
   <Style Selector="TextBlock.section"><Setter Property="FontWeight" Value="SemiBold" /></Style>
-  <Style Selector="Border.columnHeader"><Setter Property="Padding" Value="12,8" /><Setter Property="Background" Value="{DynamicResource SystemControlBackgroundBaseLowBrush}" /></Style>
+  <Style Selector="Border.columnHeader"><Setter Property="Background" Value="{DynamicResource SystemControlBackgroundBaseLowBrush}" /></Style>
+  <Style Selector="Border.cell">
+    <Setter Property="Padding" Value="4,2" />
+    <Setter Property="BorderThickness" Value="0,0,1,1" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SystemControlForegroundBaseLowBrush}" />
+  </Style>
   <Style Selector="Border.editor"><Setter Property="Padding" Value="16,12" /></Style>
   <Style Selector="Border.footer">
     <Setter Property="Padding" Value="12,6" />

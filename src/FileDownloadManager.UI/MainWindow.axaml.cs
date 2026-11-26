@@ -27,7 +27,14 @@ public sealed partial class MainWindow : Window
             FontFamily = new FontFamily("Segoe UI");
         SystemIcons.IsEnabled = _systemIcons is not null;
         SetIconTheme(_systemIcons);
-        Filters.SelectedIndex = 0;
+        Filters.ItemsSource = new[]
+        {
+            DownloadCategory.Group(Strings.AllDownloads, LibraryFilter.All),
+            DownloadCategory.Group(Strings.IncompleteTransfers, LibraryFilter.Incomplete),
+            DownloadCategory.Group(Strings.FinishedTransfers, LibraryFilter.Finished),
+            new DownloadCategory(Strings.ActiveTransfers, LibraryFilter.Active)
+        };
+        Filters.SelectedItem = Filters.Items[0];
         Closed += (_, _) => _lifetime.Dispose();
     }
 
@@ -62,8 +69,8 @@ public sealed partial class MainWindow : Window
 
     private void RefreshRows(DownloadRow? select = null)
     {
-        var filter = (Filters.SelectedItem as ListBoxItem)?.Tag as LibraryFilter? ?? LibraryFilter.All;
-        var visible = _library.Where(row => filter == LibraryFilter.All || row.Category == filter).ToList();
+        var filter = Filters.SelectedItem as DownloadCategory;
+        var visible = _library.Where(row => filter?.Matches(row) ?? true).ToList();
         select ??= Rows.SelectedItem as DownloadRow;
         Rows.ItemsSource = visible;
         Rows.SelectedItem = select is not null && visible.Contains(select) ? select : null;
@@ -79,8 +86,29 @@ public sealed partial class MainWindow : Window
         var selected = Rows.SelectedItem as DownloadRow;
         var active = selected is not null && ReferenceEquals(selected, _activeRow);
         StopButton.IsEnabled = StopMenu.IsEnabled = active;
+        StopAllButton.IsEnabled = _activeRow is not null;
+        RetryButton.IsEnabled = _activeRow is null && selected?.Category == LibraryFilter.Incomplete;
+        ClearButton.IsEnabled = _library.Any(row => row.Category == LibraryFilter.Finished);
         RemoveButton.IsEnabled = RemoveMenu.IsEnabled = selected is not null && !active;
     }
+
+    private void ClearFinishedClicked(object? sender, RoutedEventArgs args)
+    {
+        _library.RemoveAll(row => row.Category == LibraryFilter.Finished);
+        RefreshRows();
+    }
+
+    private void RetryClicked(object? sender, RoutedEventArgs args)
+    {
+        if (Rows.SelectedItem is not DownloadRow row || _activeRow is not null)
+            return;
+        SourceUrl.Text = row.Source.AbsoluteUri;
+        Destination.Text = row.Destination;
+        Notes.Text = row.Description;
+        StartClicked(sender, args);
+    }
+
+    private void OptionsClicked(object? sender, RoutedEventArgs args) => ViewMenu.IsSubMenuOpen = true;
 
     private void RemoveClicked(object? sender, RoutedEventArgs args)
     {
@@ -145,21 +173,24 @@ public sealed partial class MainWindow : Window
 
         using var transfer = CancellationTokenSource.CreateLinkedTokenSource(_lifetime.Token);
         _transfer = transfer;
-        var row = new DownloadRow(path, source.Host, LibraryFilter.Active, Strings.Downloading, string.Empty);
+        var metrics = new TransferMetrics();
+        var row = new DownloadRow(path, source, Notes.Text ?? string.Empty, LibraryFilter.Active,
+            Strings.Downloading, string.Empty) { Metrics = metrics };
         _activeRow = row;
         _library.Insert(0, row);
         Editor.IsVisible = false;
-        Filters.SelectedIndex = 0;
+        Filters.SelectedItem = Filters.Items[0];
         RefreshRows(row);
         SetDownloading(true);
         Status.Text = Strings.Downloading;
-        var result = row with { Category = LibraryFilter.Incomplete, Status = Strings.Failed };
+        var result = row with { Category = LibraryFilter.Incomplete, Status = Strings.Failed, Metrics = null };
         try
         {
-            await Downloader.DownloadAsync(new DownloadRequest(source, path), transfer.Token);
+            await Downloader.DownloadAsync(new DownloadRequest(source, path),
+                new Progress<TransferProgress>(metrics.Update), transfer.Token);
             Status.Text = Strings.Completed;
-            result = row with { Category = LibraryFilter.Finished, Status = Strings.FinishedTransfers,
-                Size = string.Format(CultureInfo.CurrentCulture, Strings.ByteSize, new FileInfo(path).Length) };
+            result = result with { Category = LibraryFilter.Finished, Status = Strings.FinishedTransfers,
+                Size = TransferMetrics.FormatSize(new FileInfo(path).Length) };
         }
         catch (OperationCanceledException) when (transfer.IsCancellationRequested)
         {

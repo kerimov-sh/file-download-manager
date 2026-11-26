@@ -1,4 +1,5 @@
 using System.Net;
+using System.Diagnostics;
 using FileDownloadManager.DownloadContracts;
 using FileDownloadManager.TransferModel;
 
@@ -8,7 +9,13 @@ public sealed class HttpFileDownloader(HttpClient httpClient) : IFileDownloader
 {
     private const string PartialFileExtension = ".partial";
 
-    public async Task DownloadAsync(DownloadRequest request, CancellationToken cancellationToken)
+    private const int CopyBufferBytes = 64 * 1024;
+    private static readonly TimeSpan ProgressInterval = TimeSpan.FromMilliseconds(250);
+
+    public Task DownloadAsync(DownloadRequest request, CancellationToken cancellationToken) =>
+        DownloadAsync(request, null, cancellationToken);
+
+    public async Task DownloadAsync(DownloadRequest request, IProgress<TransferProgress>? progress, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
         using var response = await httpClient.GetAsync(
@@ -37,7 +44,10 @@ public sealed class HttpFileDownloader(HttpClient httpClient) : IFileDownloader
         {
             await using (partial)
             {
-                await response.Content.CopyToAsync(partial, cancellationToken);
+                if (progress is null)
+                    await response.Content.CopyToAsync(partial, cancellationToken);
+                else
+                    await CopyWithProgressAsync(response.Content, partial, progress, cancellationToken);
                 if (response.Content.Headers.ContentLength is long expected && partial.Length != expected)
                 {
                     throw new EndOfStreamException();
@@ -51,5 +61,27 @@ public sealed class HttpFileDownloader(HttpClient httpClient) : IFileDownloader
         {
             File.Delete(partialPath);
         }
+    }
+
+    private static async Task CopyWithProgressAsync(HttpContent content, FileStream output,
+        IProgress<TransferProgress> progress, CancellationToken cancellationToken)
+    {
+        var clock = Stopwatch.StartNew();
+        var nextUpdate = TimeSpan.Zero;
+        var buffer = new byte[CopyBufferBytes];
+        var total = content.Headers.ContentLength;
+        using var input = await content.ReadAsStreamAsync(cancellationToken);
+        int count;
+        while ((count = await input.ReadAsync(buffer, cancellationToken)) != 0)
+        {
+            await output.WriteAsync(buffer.AsMemory(0, count), cancellationToken);
+            var elapsed = clock.Elapsed;
+            if (elapsed >= nextUpdate)
+            {
+                progress.Report(new(output.Position, total, elapsed));
+                nextUpdate = elapsed + ProgressInterval;
+            }
+        }
+        progress.Report(new(output.Position, total, clock.Elapsed));
     }
 }
